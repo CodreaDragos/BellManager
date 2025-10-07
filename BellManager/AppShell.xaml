@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="BellManager.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:pages="clr-namespace:BellManager.Pages"
+    xmlns:controls="clr-namespace:BellManager.Controls"
+    Shell.FlyoutBehavior="Disabled"
+    Title="BellManager">
+
+    <TabBar x:Name="MainTabBar">
+        <ShellContent
+            Title="Alarms"
+            ContentTemplate="{DataTemplate pages:AlarmsPage}"
+            Route="Alarms" />
+        
+        <ShellContent
+            Title="Churches"
+            ContentTemplate="{DataTemplate pages:ChurchesPage}"
+            Route="Churches"
+            x:Name="ChurchesTab" />
+        
+        <ShellContent
+            Title="Assign"
+            ContentTemplate="{DataTemplate pages:AssignUserChurchPage}"
+            Route="AssignUserChurch"
+            x:Name="AssignTab" />
+    </TabBar>
+
+    <ShellContent
+        Title="Login"
+        ContentTemplate="{DataTemplate pages:LoginPage}"
+        Route="Login" />
+
+</Shell>

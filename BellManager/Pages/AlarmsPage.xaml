@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BellManager.Pages.AlarmsPage"
+             Title="Clock"
+             BackgroundColor="#F5F7FA">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="AlarmCardStyle" TargetType="Frame">
+                <Setter Property="BackgroundColor" Value="White"/>
+                <Setter Property="CornerRadius" Value="16"/>
+                <Setter Property="HasShadow" Value="True"/>
+                <Setter Property="Margin" Value="16,8"/>
+                <Setter Property="Padding" Value="0"/>
+            </Style>
+
+            <Style x:Key="AlarmTimeStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="32"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="TextColor" Value="#1A1A1A"/>
+            </Style>
+
+            <Style x:Key="AlarmLabelStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="TextColor" Value="#666"/>
+                <Setter Property="Margin" Value="0,4,0,0"/>
+            </Style>
+
+            <Style x:Key="RepeatInfoStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="12"/>
+                <Setter Property="TextColor" Value="#999"/>
+                <Setter Property="Margin" Value="0,2,0,0"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Logout" Clicked="OnLogoutClicked" />
+    </ContentPage.ToolbarItems>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!-- Header Section -->
+        <Frame Grid.Row="0" BackgroundColor="#4285F4" CornerRadius="24" HasShadow="True" Padding="20,40,20,24">
+            <StackLayout>
+                <Label Text="Clock" FontSize="28" FontAttributes="Bold" TextColor="White" HorizontalOptions="Start"/>
+                <Label x:Name="CurrentTimeLabel" FontSize="16" TextColor="#E3F2FD" Margin="0,4,0,0"/>
+            </StackLayout>
+        </Frame>
+
+        <!-- Alarms List -->
+        <ScrollView Grid.Row="1" Margin="0,16,0,80">
+            <CollectionView ItemsSource="{Binding Alarms}"
+                          SelectionMode="None"
+                          x:Name="AlarmsList"
+                          BackgroundColor="Transparent">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <SwipeView>
+                            <SwipeView.RightItems>
+                                <SwipeItems Mode="Execute">
+                                    <SwipeItem Text="Delete" 
+                                             BackgroundColor="#F44336" 
+                                             Command="{Binding Path=BindingContext.DeleteCommand, Source={x:Reference AlarmsList}}" 
+                                             CommandParameter="{Binding .}" />
+                                </SwipeItems>
+                            </SwipeView.RightItems>
+
+                            <Frame Style="{StaticResource AlarmCardStyle}">
+                                <Grid Padding="20,16" ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto,Auto">
+                                    <Grid.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding Path=BindingContext.ItemTappedCommand, Source={x:Reference AlarmsList}}" 
+                                                            CommandParameter="{Binding .}" />
+                                    </Grid.GestureRecognizers>
+
+                                    <!-- Main Time Display -->
+                                    <StackLayout Grid.Column="0" Grid.Row="0" Orientation="Horizontal" Spacing="0">
+                                        <Label Text="{Binding TimeDisplay}" Style="{StaticResource AlarmTimeStyle}"/>
+                                        <Label Text="{Binding AmPmDisplay}" FontSize="16" TextColor="#999" VerticalOptions="Start" Margin="4,8,0,0"/>
+                                    </StackLayout>
+
+                                    <!-- Enable/Disable Switch -->
+                                    <Switch Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" 
+                                          IsToggled="{Binding IsEnabled}" 
+                                          OnColor="#4285F4"
+                                          ThumbColor="White"
+                                          VerticalOptions="Center"/>
+
+                                    <!-- Alarm Label -->
+                                    <Label Grid.Column="0" Grid.Row="1" 
+                                         Text="{Binding BellName}" 
+                                         Style="{StaticResource AlarmLabelStyle}"
+                                         IsVisible="{Binding HasBellName}"/>
+
+                                    <!-- Repeat Information -->
+                                    <Label Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="1"
+                                         Text="{Binding RepeatInfo}" 
+                                         Style="{StaticResource RepeatInfoStyle}"
+                                         IsVisible="{Binding HasRepeatInfo}"/>
+
+                                    <!-- Status Indicator -->
+                                    <Ellipse Grid.Column="1" Grid.Row="2" 
+                                           Fill="{Binding StatusColor}" 
+                                           WidthRequest="8" 
+                                           HeightRequest="8" 
+                                           HorizontalOptions="Center"
+                                           IsVisible="{Binding IsEnabled}"/>
+                                </Grid>
+                            </Frame>
+                        </SwipeView>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </ScrollView>
+
+        <!-- Floating Add Button -->
+        <Frame Grid.Row="1" 
+               CornerRadius="28" 
+               HeightRequest="56" 
+               WidthRequest="56" 
+               Padding="0" 
+               BackgroundColor="#4285F4" 
+               HasShadow="True" 
+               VerticalOptions="End" 
+               HorizontalOptions="Center" 
+               Margin="0,0,0,24">
+            <Button Text="+" 
+                  BackgroundColor="Transparent" 
+                  TextColor="White"
+                  FontSize="24"
+                  FontAttributes="Bold"
+                  Command="{Binding AddCommand}" 
+                  CornerRadius="28"/>
+        </Frame>
+    </Grid>
+</ContentPage>

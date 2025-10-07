@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BellManager.Pages.ChurchesPage"
+             Title="Churches"
+             BackgroundColor="#F5F7FA">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="ChurchCardStyle" TargetType="Frame">
+                <Setter Property="BackgroundColor" Value="White"/>
+                <Setter Property="CornerRadius" Value="16"/>
+                <Setter Property="HasShadow" Value="True"/>
+                <Setter Property="Margin" Value="16,8"/>
+                <Setter Property="Padding" Value="0"/>
+            </Style>
+
+            <Style x:Key="ChurchNameStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="18"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="TextColor" Value="#1A1A1A"/>
+            </Style>
+
+            <Style x:Key="ChurchPhoneStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="TextColor" Value="#666"/>
+                <Setter Property="Margin" Value="0,4,0,0"/>
+            </Style>
+
+            <Style x:Key="ActionButtonStyle" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="#4285F4"/>
+                <Setter Property="TextColor" Value="White"/>
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="CornerRadius" Value="8"/>
+                <Setter Property="HeightRequest" Value="36"/>
+                <Setter Property="WidthRequest" Value="80"/>
+            </Style>
+
+            <Style x:Key="DeleteButtonStyle" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="#F44336"/>
+                <Setter Property="TextColor" Value="White"/>
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="CornerRadius" Value="8"/>
+                <Setter Property="HeightRequest" Value="36"/>
+                <Setter Property="WidthRequest" Value="80"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!-- Header Section -->
+        <Frame Grid.Row="0" BackgroundColor="#4285F4" CornerRadius="24" HasShadow="True" Padding="20,40,20,24">
+            <StackLayout>
+                <Label Text="Churches Management" FontSize="28" FontAttributes="Bold" TextColor="White" HorizontalOptions="Start"/>
+                <Label Text="Manage church information and assignments" FontSize="16" TextColor="#E3F2FD" Margin="0,4,0,0"/>
+            </StackLayout>
+        </Frame>
+
+        <!-- Add Church Form -->
+        <Frame Grid.Row="0" BackgroundColor="White" CornerRadius="16" HasShadow="True" Padding="20,16" Margin="16,80,16,16">
+            <VerticalStackLayout Spacing="16">
+                <Label Text="Add New Church" FontSize="18" FontAttributes="Bold" TextColor="#1A1A1A" />
+                
+                <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto" ColumnSpacing="12" RowSpacing="12">
+                    <Entry Grid.Row="0" Grid.Column="0" 
+                           Placeholder="Church Name" 
+                           Text="{Binding Name}" 
+                           FontSize="16" 
+                           BackgroundColor="#F8F9FA" />
+                    
+                    <Entry Grid.Row="0" Grid.Column="1" 
+                           Placeholder="Phone Number" 
+                           Text="{Binding Phone}" 
+                           FontSize="16" 
+                           BackgroundColor="#F8F9FA" />
+                    
+                    <Button Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+                            Text="Add Church" 
+                            Style="{StaticResource ActionButtonStyle}"
+                            HeightRequest="48"
+                            WidthRequest="200"
+                            HorizontalOptions="Center"
+                            Command="{Binding AddCommand}" />
+                </Grid>
+            </VerticalStackLayout>
+        </Frame>
+
+        <!-- Churches List -->
+        <ScrollView Grid.Row="1" Margin="0,16,0,80">
+		<CollectionView ItemsSource="{Binding Churches}"
+					  SelectionMode="None"
+					  x:Name="ChurchesList"
+					  BackgroundColor="Transparent"
+					  Margin="16,0">
+			<CollectionView.Header>
+				<Label Text="{Binding Churches.Count, StringFormat='Total Churches: {0}'}" 
+					   FontSize="16" 
+					   TextColor="#666" 
+					   HorizontalOptions="Center" 
+					   Margin="0,0,0,10" />
+			</CollectionView.Header>
+			<CollectionView.ItemTemplate>
+				<DataTemplate>
+					<SwipeView>
+						<SwipeView.RightItems>
+							<SwipeItems Mode="Execute">
+								<SwipeItem Text="Delete" 
+										 BackgroundColor="#F44336" 
+										 Command="{Binding Path=BindingContext.DeleteCommand, Source={x:Reference ChurchesList}}" 
+										 CommandParameter="{Binding .}" />
+							</SwipeItems>
+						</SwipeView.RightItems>
+
+						<Frame BackgroundColor="White" 
+							   CornerRadius="16" 
+							   HasShadow="True" 
+							   Padding="20,16" 
+							   Margin="0,8">
+							<Grid Padding="0" ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto,Auto">
+								<StackLayout Grid.Column="0" Grid.Row="0" Grid.RowSpan="3">
+									<Label Text="{Binding Name, FallbackValue='[No Name]'}" 
+										   FontSize="18" 
+										   FontAttributes="Bold" 
+										   TextColor="#1A1A1A" 
+										   Margin="0,0,0,4"/>
+									<Label Text="{Binding PhoneNumber, FallbackValue='[No Phone]'}" 
+										   FontSize="14" 
+										   TextColor="#666" />
+									<Label Text="{Binding Id, StringFormat='ID: {0}'}" 
+										   FontSize="12" 
+										   TextColor="#999" />
+								</StackLayout>
+								
+								<StackLayout Grid.Column="1" Grid.Row="0" Grid.RowSpan="3" 
+										   Orientation="Horizontal" 
+										   Spacing="8" 
+										   VerticalOptions="Center">
+									<Button Text="Edit" 
+										  BackgroundColor="#2196F3"
+										  TextColor="White"
+										  CornerRadius="8"
+										  Padding="16,8"
+										  Command="{Binding Path=BindingContext.EditCommand, Source={x:Reference ChurchesList}}" 
+										  CommandParameter="{Binding .}" />
+									<Button Text="Delete" 
+										  BackgroundColor="#F44336"
+										  TextColor="White"
+										  CornerRadius="8"
+										  Padding="16,8"
+										  Command="{Binding Path=BindingContext.DeleteCommand, Source={x:Reference ChurchesList}}" 
+										  CommandParameter="{Binding .}" />
+								</StackLayout>
+							</Grid>
+						</Frame>
+					</SwipeView>
+				</DataTemplate>
+			</CollectionView.ItemTemplate>
+		</CollectionView>
+        </ScrollView>
+
+        <!-- Edit Church Popup -->
+        <Frame x:Name="EditPopup" 
+               Grid.Row="0" 
+               Grid.RowSpan="2"
+               BackgroundColor="White" 
+               CornerRadius="20" 
+               HasShadow="True" 
+               Padding="24,20" 
+               Margin="20,100,20,100"
+               IsVisible="False"
+               VerticalOptions="Center"
+               HorizontalOptions="Fill">
+            <VerticalStackLayout Spacing="20">
+                <Label Text="Edit Church" 
+                       FontSize="24" 
+                       FontAttributes="Bold" 
+                       TextColor="#1A1A1A" 
+                       HorizontalOptions="Center" />
+                
+                <Entry x:Name="EditNameEntry" 
+                       Placeholder="Church Name" 
+                       FontSize="16" 
+                       BackgroundColor="#F8F9FA"
+                       HeightRequest="50"
+                       Text="{Binding EditingName}" />
+                
+                <Entry x:Name="EditPhoneEntry" 
+                       Placeholder="Phone Number" 
+                       FontSize="16" 
+                       BackgroundColor="#F8F9FA"
+                       HeightRequest="50"
+                       Text="{Binding EditingPhone}" />
+                
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                    <Button Grid.Column="0"
+                            Text="Save" 
+                            BackgroundColor="#4CAF50"
+                            TextColor="White"
+                            CornerRadius="8"
+                            HeightRequest="50"
+                            Command="{Binding SaveEditCommand}" />
+                    
+                    <Button Grid.Column="1"
+                            Text="Cancel" 
+                            BackgroundColor="#F44336"
+                            TextColor="White"
+                            CornerRadius="8"
+                            HeightRequest="50"
+                            Command="{Binding CancelEditCommand}" />
+                </Grid>
+            </VerticalStackLayout>
+        </Frame>
+
+        <!-- Error Label -->
+        <Label x:Name="ErrorLabel" 
+               Grid.Row="1"
+               TextColor="#F44336" 
+               FontSize="14"
+               HorizontalOptions="Center"
+               VerticalOptions="End"
+               Margin="0,0,0,20"
+               IsVisible="False" />
+    </Grid>
+</ContentPage>
+
+

@@ -1,0 +1,39 @@
+﻿# Visual Studio
+.vs/
+*.user
+*.swp
+*.suo
+*.userprefs
+*.csproj.user
+
+# Build outputs
+**/bin/
+**/obj/
+**/out/
+
+# MAUI/Android
+**/*.apk
+**/*.aab
+**/*.ap_*
+**/.gradle/
+**/AndroidManifest.xml.bak
+**/bin/Debug/
+**/bin/Release/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Rider/VS Code
+.idea/
+.vscode/
+
+# Tooling
+node_modules/
+
+# Other
+*.vsidx
+**/FileContentIndex/

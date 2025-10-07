@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BellManager.Pages.AssignUserChurchPage"
+             Title="Assign User to Church"
+             BackgroundColor="#F5F7FA">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="AssignmentCardStyle" TargetType="Frame">
+                <Setter Property="BackgroundColor" Value="White"/>
+                <Setter Property="CornerRadius" Value="16"/>
+                <Setter Property="HasShadow" Value="True"/>
+                <Setter Property="Margin" Value="16,8"/>
+                <Setter Property="Padding" Value="24,24"/>
+                <Setter Property="HeightRequest" Value="180"/>
+            </Style>
+
+            <Style x:Key="PickerStyle" TargetType="Picker">
+                <Setter Property="FontSize" Value="16"/>
+                <Setter Property="BackgroundColor" Value="#F8F9FA"/>
+                <Setter Property="TextColor" Value="#1A1A1A"/>
+                <Setter Property="HeightRequest" Value="48"/>
+            </Style>
+
+            <Style x:Key="AssignButtonStyle" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="#4285F4"/>
+                <Setter Property="TextColor" Value="White"/>
+                <Setter Property="FontSize" Value="18"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="CornerRadius" Value="16"/>
+                <Setter Property="HeightRequest" Value="56"/>
+            </Style>
+
+            <Style x:Key="UserInfoStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="16"/>
+                <Setter Property="TextColor" Value="#1A1A1A"/>
+                <Setter Property="Margin" Value="0,4,0,0"/>
+            </Style>
+
+            <Style x:Key="ChurchInfoStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="TextColor" Value="#666"/>
+                <Setter Property="Margin" Value="0,2,0,0"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!-- Header Section -->
+        <Frame Grid.Row="0" BackgroundColor="#4285F4" CornerRadius="24" HasShadow="True" Padding="20,40,20,24">
+            <StackLayout>
+                <Label Text="User-Church Assignment" FontSize="28" FontAttributes="Bold" TextColor="White" HorizontalOptions="Start"/>
+                <Label Text="Assign users to their respective churches" FontSize="16" TextColor="#E3F2FD" Margin="0,4,0,0"/>
+            </StackLayout>
+        </Frame>
+
+        <!-- Assignment Form -->
+        <Frame Grid.Row="0" BackgroundColor="White" CornerRadius="16" HasShadow="True" Padding="20,16" Margin="16,80,16,16">
+            <VerticalStackLayout Spacing="20">
+                <Label Text="Assign User to Church" FontSize="18" FontAttributes="Bold" TextColor="#1A1A1A" />
+                
+                <VerticalStackLayout Spacing="16">
+                    <Label Text="Select User" FontSize="16" FontAttributes="Bold" TextColor="#1A1A1A" />
+                    <Picker x:Name="UserPicker" 
+                            Title="Choose a user..." 
+                            ItemsSource="{Binding Users}"
+                            ItemDisplayBinding="{Binding UserName}" 
+                            Style="{StaticResource PickerStyle}" />
+                    
+                    <Label Text="Select Church" FontSize="16" FontAttributes="Bold" TextColor="#1A1A1A" />
+                    <Picker x:Name="ChurchPicker" 
+                            Title="Choose a church..." 
+                            ItemsSource="{Binding Churches}"
+                            ItemDisplayBinding="{Binding Name}" 
+                            Style="{StaticResource PickerStyle}" />
+                    
+                    <Button Text="Assign User to Church" 
+                            Style="{StaticResource AssignButtonStyle}"
+                            Clicked="OnAssignClicked" />
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+        </Frame>
+
+        <!-- Current Assignments List -->
+        <ScrollView Grid.Row="1" Margin="0,16,0,80">
+            <VerticalStackLayout Spacing="8">
+                <Label Text="Current Assignments" 
+                       FontSize="20" 
+                       FontAttributes="Bold" 
+                       TextColor="#1A1A1A" 
+                       Margin="16,0,16,8" />
+                
+                <CollectionView ItemsSource="{Binding UserAssignments}"
+                              SelectionMode="None"
+                              x:Name="AssignmentsList"
+                              BackgroundColor="Transparent">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <SwipeView>
+                                <SwipeView.RightItems>
+                                    <SwipeItems Mode="Execute">
+                                        <SwipeItem Text="Delete" 
+                                                 BackgroundColor="#F44336" 
+                                                 Command="{Binding Path=BindingContext.DeleteAssignmentCommand, Source={x:Reference AssignmentsList}}" 
+                                                 CommandParameter="{Binding .}" />
+                                    </SwipeItems>
+                                </SwipeView.RightItems>
+
+                                <Frame Style="{StaticResource AssignmentCardStyle}">
+                                    <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto,Auto,Auto">
+                                        <!-- User Information -->
+                                        <StackLayout Grid.Column="0" Grid.Row="0">
+                                            <Label Text="{Binding UserName, FallbackValue='[No User]'}" Style="{StaticResource UserInfoStyle}"/>
+                                            <Label Text="{Binding UserEmail, FallbackValue='[No Email]'}" FontSize="14" TextColor="#999" Margin="0,2,0,8"/>
+                                        </StackLayout>
+
+                                        <!-- Church Information -->
+                                        <StackLayout Grid.Column="0" Grid.Row="1">
+                                            <Label Text="Assigned to:" FontSize="12" TextColor="#666" Margin="0,0,0,4"/>
+                                            <Label Text="{Binding ChurchName, FallbackValue='[No Church]'}" Style="{StaticResource ChurchInfoStyle}" FontSize="16" TextColor="#1A1A1A"/>
+                                            <Label Text="{Binding ChurchPhone, FallbackValue='[No Phone]'}" FontSize="14" TextColor="#666" Margin="0,2,0,0"/>
+                                            <!-- Debug Info -->
+                                            <Label Text="{Binding ChurchId, FallbackValue='[No Church ID]'}" FontSize="10" TextColor="#999" Margin="0,4,0,0"/>
+                                        </StackLayout>
+
+                                        <!-- Action Buttons -->
+                                        <StackLayout Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" 
+                                                   VerticalOptions="Center" 
+                                                   HorizontalOptions="End"
+                                                   Orientation="Vertical"
+                                                   Spacing="8">
+                                            <Button Text="Edit" 
+                                                  BackgroundColor="#2196F3"
+                                                  TextColor="White"
+                                                  CornerRadius="8"
+                                                  Padding="12,8"
+                                                  FontSize="12"
+                                                  Command="{Binding Path=BindingContext.EditAssignmentCommand, Source={x:Reference AssignmentsList}}" 
+                                                  CommandParameter="{Binding .}" />
+                                            <Button Text="Delete" 
+                                                  BackgroundColor="#F44336"
+                                                  TextColor="White"
+                                                  CornerRadius="8"
+                                                  Padding="12,8"
+                                                  FontSize="12"
+                                                  Command="{Binding Path=BindingContext.DeleteAssignmentCommand, Source={x:Reference AssignmentsList}}" 
+                                                  CommandParameter="{Binding .}" />
+                                        </StackLayout>
+                                    </Grid>
+                                </Frame>
+                            </SwipeView>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- Edit Assignment Popup -->
+        <Frame x:Name="EditAssignmentPopup" 
+               Grid.Row="0" 
+               Grid.RowSpan="2"
+               BackgroundColor="White" 
+               CornerRadius="20" 
+               HasShadow="True" 
+               Padding="24,20" 
+               Margin="20,100,20,100"
+               IsVisible="False"
+               VerticalOptions="Center"
+               HorizontalOptions="Fill">
+            <VerticalStackLayout Spacing="20">
+                <Label Text="Edit Assignment" 
+                       FontSize="24" 
+                       FontAttributes="Bold" 
+                       TextColor="#1A1A1A" 
+                       HorizontalOptions="Center" />
+                
+                <Label x:Name="EditUserLabel" 
+                       FontSize="16" 
+                       TextColor="#1A1A1A" 
+                       HorizontalOptions="Center" />
+                
+                <Picker x:Name="EditChurchPicker" 
+                        Title="Select New Church" 
+                        ItemsSource="{Binding Churches}"
+                        ItemDisplayBinding="{Binding Name}" 
+                        Style="{StaticResource PickerStyle}"
+                        SelectedIndexChanged="OnEditChurchPickerSelectionChanged" />
+                
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                    <Button Grid.Column="0"
+                            Text="Save" 
+                            BackgroundColor="#4CAF50"
+                            TextColor="White"
+                            CornerRadius="8"
+                            HeightRequest="50"
+                            Command="{Binding SaveEditAssignmentCommand}" />
+                    
+                    <Button Grid.Column="1"
+                            Text="Cancel" 
+                            BackgroundColor="#F44336"
+                            TextColor="White"
+                            CornerRadius="8"
+                            HeightRequest="50"
+                            Command="{Binding CancelEditAssignmentCommand}" />
+                </Grid>
+            </VerticalStackLayout>
+        </Frame>
+
+        <!-- Error Label -->
+        <Frame Grid.Row="1"
+               BackgroundColor="#FFEBEE"
+               Padding="12,8"
+               Margin="16,0,16,20"
+               CornerRadius="8"
+               IsVisible="{Binding HasError}"
+               VerticalOptions="End">
+            <Label Text="{Binding ErrorMessage}" 
+                   TextColor="#F44336" 
+                   FontSize="14"
+                   HorizontalOptions="Center" />
+        </Frame>
+    </Grid>
+</ContentPage>
+
+
