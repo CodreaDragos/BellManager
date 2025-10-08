@@ -29,11 +29,11 @@ public static class MauiProgram
 		string apiBase;
 		if (DeviceInfo.Platform == DevicePlatform.Android)
 		{
-			apiBase = "http://192.168.0.198:8080/"; // Your laptop's current IP address on port 8080
+			apiBase = "https://bellmanager-production.up.railway.app/"; // Your laptop's current IP address on port 8080
 		}
 		else
 		{
-			apiBase = "http://localhost:8080/"; // iOS simulator/Windows/MacCatalyst on port 8080
+			apiBase = "https://bellmanager-production.up.railway.app/"; // iOS simulator/Windows/MacCatalyst on port 8080
 		}
 
 
