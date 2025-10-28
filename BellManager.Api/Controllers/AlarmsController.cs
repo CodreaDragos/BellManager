@@ -19,6 +19,49 @@ namespace BellManager.Api.Controllers
 			_dbContext = dbContext;
 		}
 
+		[HttpGet("today")]
+		[AllowAnonymous]
+		public async Task<ActionResult<IEnumerable<AlarmTodayDto>>> GetToday()
+		{
+			var today = DateTime.Now;
+			var dayOfWeekShort = today.DayOfWeek switch
+			{
+				DayOfWeek.Sunday => "Sun",
+				DayOfWeek.Monday => "Mon",
+				DayOfWeek.Tuesday => "Tue",
+				DayOfWeek.Wednesday => "Wed",
+				DayOfWeek.Thursday => "Thu",
+				DayOfWeek.Friday => "Fri",
+				DayOfWeek.Saturday => "Sat",
+				_ => ""
+			};
+
+			var alarms = await _dbContext.Alarms
+				.Include(a => a.Church)
+				.Where(a => a.IsEnabled && a.DaysOfWeek.Contains(dayOfWeekShort))
+				.AsNoTracking()
+				.ToListAsync();
+
+			var result = alarms
+				.Select(a =>
+				{
+					// HourUtc stores the time as-is (despite the name, it's stored in local timezone)
+					// Get phone number from Church, fallback to empty string if not available
+					var phoneNumber = a.Church?.PhoneNumber ?? string.Empty;
+
+					return new AlarmTodayDto
+					{
+						Ora = a.HourUtc.Hour,
+						Minut = a.HourUtc.Minute,
+						NumarApel = phoneNumber
+					};
+				})
+				.OrderBy(a => a.Ora * 60 + a.Minut) // Sort by time
+				.ToList();
+
+			return Ok(result);
+		}
+
 		[HttpGet]
 		public async Task<ActionResult<IEnumerable<Alarm>>> GetAll()
 		{
