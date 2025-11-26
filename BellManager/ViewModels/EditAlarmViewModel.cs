@@ -15,10 +15,25 @@ namespace BellManager.ViewModels
         Sunday,
         Custom
     }
+    [QueryProperty(nameof(AlarmId), "alarmId")]
     public class EditAlarmViewModel : INotifyPropertyChanged
 	{
 		private readonly AlarmApiService _api;
 		private readonly UserService _userService;
+
+        public string AlarmId
+        {
+            set
+            {
+                if (int.TryParse(value, out var id))
+                {
+                    System.Diagnostics.Debug.WriteLine($"EditAlarmViewModel: Received AlarmId {id}");
+                    _ = LoadAlarmAsync(id);
+                }
+            }
+        }
+
+
 
 		public int Id { get; set; }
         public string BellName { get; set; } = string.Empty;
@@ -52,18 +67,55 @@ namespace BellManager.ViewModels
             set => SetProperty(ref _churchId, value); 
         }
         // Time selection via pickers
+        private TimeSpan _selectedTime = new TimeSpan(7, 30, 0);
+        public TimeSpan SelectedTime
+        {
+            get => _selectedTime;
+            set
+            {
+                if (SetProperty(ref _selectedTime, value))
+                {
+                    // Sync legacy properties
+                    _selectedHour = value.Hours;
+                    _selectedMinute = value.Minutes;
+                    OnPropertyChanged(nameof(SelectedHour));
+                    OnPropertyChanged(nameof(SelectedMinute));
+                }
+            }
+        }
+
         private int _selectedHour = 7;
         public int SelectedHour 
         { 
             get => _selectedHour; 
-            set => SetProperty(ref _selectedHour, value); 
+            set 
+            {
+                if (SetProperty(ref _selectedHour, value))
+                {
+                    // Sync TimeSpan
+                    if (_selectedTime.Hours != value)
+                    {
+                        SelectedTime = new TimeSpan(value, _selectedMinute, 0);
+                    }
+                }
+            } 
         }
         
         private int _selectedMinute = 30;
         public int SelectedMinute 
         { 
             get => _selectedMinute; 
-            set => SetProperty(ref _selectedMinute, value); 
+            set 
+            {
+                if (SetProperty(ref _selectedMinute, value))
+                {
+                    // Sync TimeSpan
+                    if (_selectedTime.Minutes != value)
+                    {
+                        SelectedTime = new TimeSpan(_selectedHour, value, 0);
+                    }
+                }
+            } 
         }
 
         // New repeat system
@@ -163,7 +215,7 @@ namespace BellManager.ViewModels
         public DateTime Today => DateTime.Today;
         public DateTime MaxDate => DateTime.Today.AddYears(1);
 
-        public string DaysOfWeek { get; set; } = string.Empty;
+        public List<string> DaysOfWeek { get; set; } = new List<string>();
 		public bool IsEnabled { get; set; } = true;
 		public string? Notes { get; set; }
 
@@ -221,6 +273,22 @@ namespace BellManager.ViewModels
 			_ = Task.Run(async () => await LoadChurchInfoAsync());
 		}
 
+        private async Task LoadAlarmAsync(int id)
+        {
+            try
+            {
+                var alarm = await _api.GetAsync(id);
+                if (alarm != null)
+                {
+                    MainThread.BeginInvokeOnMainThread(() => LoadFrom(alarm));
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error loading alarm {id}: {ex.Message}");
+            }
+        }
+
         public void LoadFrom(Alarm? alarm)
         {
             if (alarm == null) 
@@ -230,6 +298,7 @@ namespace BellManager.ViewModels
                 BellName = string.Empty;
                 SelectedHour = 7;
                 SelectedMinute = 30;
+                SelectedTime = new TimeSpan(7, 30, 0);
                 SelectedRepeatType = RepeatType.Once;
                 IsRepeating = false;
                 RepeatSun = false;
@@ -239,7 +308,7 @@ namespace BellManager.ViewModels
                 RepeatThu = false;
                 RepeatFri = false;
                 RepeatSat = false;
-                DaysOfWeek = string.Empty;
+                DaysOfWeek = new List<string>();
                 IsEnabled = true;
                 Notes = null;
                 OnPropertyChanged(nameof(SelectedRepeatTypeIndex));
@@ -251,6 +320,7 @@ namespace BellManager.ViewModels
 
             SelectedHour = alarm.HourUtc.Hour;
             SelectedMinute = alarm.HourUtc.Minute;
+            SelectedTime = new TimeSpan(SelectedHour, SelectedMinute, 0);
 
             DaysOfWeek = alarm.DaysOfWeek;
             IsEnabled = alarm.IsEnabled;
@@ -280,7 +350,6 @@ namespace BellManager.ViewModels
             
             var time = new TimeOnly(SelectedHour, SelectedMinute);
             var daysOfWeek = ComputeDaysOfWeekFromNewSystem();
-            System.Diagnostics.Debug.WriteLine($"Computed DaysOfWeek: {daysOfWeek}");
             
             var model = new Alarm
             {
@@ -324,7 +393,7 @@ namespace BellManager.ViewModels
         }
 
 
-        private string ComputeDaysOfWeekFromNewSystem()
+        private List<string> ComputeDaysOfWeekFromNewSystem()
         {
             switch (SelectedRepeatType)
             {
@@ -336,7 +405,7 @@ namespace BellManager.ViewModels
                         var todayTime = new DateTime(nowUtc.Year, nowUtc.Month, nowUtc.Day, SelectedHour, SelectedMinute, 0, DateTimeKind.Utc);
                         var next = todayTime > nowUtc ? todayTime : todayTime.AddDays(1);
                         var day = next.DayOfWeek; // Sunday..Saturday
-                        return DayOfWeekToShort(day);
+                        return new List<string> { DayOfWeekToShort(day) };
                     }
                     else
                     {
@@ -345,23 +414,7 @@ namespace BellManager.ViewModels
                         var todayTime = new DateTime(nowUtc.Year, nowUtc.Month, nowUtc.Day, SelectedHour, SelectedMinute, 0, DateTimeKind.Utc);
                         var next = todayTime > nowUtc ? todayTime : todayTime.AddDays(1);
                         var day = next.DayOfWeek;
-                        return DayOfWeekToShort(day);
-                    }
-                    
-                case RepeatType.Sunday:
-                    if (!IsRepeating)
-                    {
-                        // Sunday once - find next Sunday
-                        var nowUtc = DateTime.UtcNow;
-                        var todayTime = new DateTime(nowUtc.Year, nowUtc.Month, nowUtc.Day, SelectedHour, SelectedMinute, 0, DateTimeKind.Utc);
-                        var next = todayTime > nowUtc ? todayTime : todayTime.AddDays(1);
-                        var day = next.DayOfWeek;
-                        return DayOfWeekToShort(day);
-                    }
-                    else
-                    {
-                        // Sunday with weekly repeat
-                        return "Sun";
+                        return new List<string> { DayOfWeekToShort(day) };
                     }
                     
                 case RepeatType.Custom:
@@ -375,7 +428,7 @@ namespace BellManager.ViewModels
                         if (selectedDateTime > nowUtc)
                         {
                             // Use the specific date
-                            return DayOfWeekToShort(SelectedDate.Value.DayOfWeek);
+                            return new List<string> { DayOfWeekToShort(SelectedDate.Value.DayOfWeek) };
                         }
                         else
                         {
@@ -385,21 +438,12 @@ namespace BellManager.ViewModels
                             {
                                 nextOccurrence = nextOccurrence.AddDays(7);
                             }
-                            return DayOfWeekToShort(nextOccurrence.DayOfWeek);
+                            return new List<string> { DayOfWeekToShort(nextOccurrence.DayOfWeek) };
                         }
-                    }
-                    else if (!IsRepeating)
-                    {
-                        // If not repeating, treat as once - find next occurrence
-                        var nowUtcCustom = DateTime.UtcNow;
-                        var todayTimeCustom = new DateTime(nowUtcCustom.Year, nowUtcCustom.Month, nowUtcCustom.Day, SelectedHour, SelectedMinute, 0, DateTimeKind.Utc);
-                        var nextCustom = todayTimeCustom > nowUtcCustom ? todayTimeCustom : todayTimeCustom.AddDays(1);
-                        var dayCustom = nextCustom.DayOfWeek;
-                        return DayOfWeekToShort(dayCustom);
                     }
                     else
                     {
-                        // Custom days with weekly repeat
+                        // Custom days (whether repeating or once)
                         var list = new List<string>();
                         if (RepeatSun) list.Add("Sun");
                         if (RepeatMon) list.Add("Mon");
@@ -408,11 +452,15 @@ namespace BellManager.ViewModels
                         if (RepeatThu) list.Add("Thu");
                         if (RepeatFri) list.Add("Fri");
                         if (RepeatSat) list.Add("Sat");
-                        return string.Join(',', list);
+                        
+                        // If no days selected but it's Custom, maybe default to today? 
+                        // Or just return empty list (which might be invalid).
+                        // Let's return empty list for now, validation should handle it if needed.
+                        return list;
                     }
                     
                 default:
-                    return string.Empty;
+                    return new List<string>();
             }
         }
 
@@ -443,9 +491,9 @@ namespace BellManager.ViewModels
             RepeatSat = set.Contains("Sat");
         }
 
-        private void ParseAlarmRepeatType(string daysOfWeek)
+        private void ParseAlarmRepeatType(List<string> daysOfWeek)
         {
-            if (string.IsNullOrEmpty(daysOfWeek)) 
+            if (daysOfWeek == null || !daysOfWeek.Any()) 
             {
                 // Only set properties if not already loaded from alarm data
                 if (SelectedRepeatType == RepeatType.Once && !IsRepeating && SelectedDate == null)
@@ -456,8 +504,7 @@ namespace BellManager.ViewModels
                 return;
             }
             
-            var days = daysOfWeek.Split(',', StringSplitOptions.RemoveEmptyEntries)
-                                .Select(d => d.Trim()).ToList();
+            var days = daysOfWeek.Select(d => d.Trim()).ToList();
             
             // Only set day flags, don't change SelectedRepeatType as it's already loaded from alarm data
             if (days.Count == 1 && days.Contains("Sun"))

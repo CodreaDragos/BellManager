@@ -38,6 +38,18 @@ namespace BellManager.Services
 			}
 		}
 
+        public async Task<Alarm?> GetAsync(int id, CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                return await _httpClient.GetFromJsonAsync<Alarm>($"api/alarms/{id}", cancellationToken);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
 		public async Task<Alarm?> CreateAsync(Alarm alarm, CancellationToken cancellationToken = default)
 		{
 			try

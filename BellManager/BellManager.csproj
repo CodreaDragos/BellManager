@@ -40,10 +40,10 @@
 
 	<ItemGroup>
 		<!-- App Icon -->
-		<MauiIcon Include="Resources\AppIcon\appicon.png" Color="#512BD4" />
+		<MauiIcon Include="Resources\Images\bell_icon.png" Color="#512BD4" Scale="0.25" />
 
 		<!-- Splash Screen -->
-		<MauiSplashScreen Include="Resources\Images\loadscreen.png" Color="#512BD4" Resize="True" />
+		<MauiSplashScreen Include="Resources\Images\loadscreen.png" Color="#5527ad" Resize="False" />
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\dotnet_bot.png" Resize="True" BaseSize="300,185" />

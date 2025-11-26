@@ -8,47 +8,58 @@
     <ContentPage.Resources>
         <ResourceDictionary>
             <Style x:Key="HeaderStyle" TargetType="Frame">
-                <Setter Property="BackgroundColor" Value="#4285F4"/>
+                <Setter Property="BackgroundColor" Value="#5527ad"/>
                 <Setter Property="CornerRadius" Value="0"/>
                 <Setter Property="HasShadow" Value="True"/>
-                <Setter Property="Padding" Value="20,60,20,30"/>
+                <Setter Property="Padding" Value="20,60,20,40"/>
             </Style>
             
             <Style x:Key="CardStyle" TargetType="Frame">
                 <Setter Property="BackgroundColor" Value="White"/>
                 <Setter Property="CornerRadius" Value="24"/>
                 <Setter Property="HasShadow" Value="True"/>
-                <Setter Property="Margin" Value="20,0,20,20"/>
+                <Setter Property="Margin" Value="20,-30,20,20"/>
                 <Setter Property="Padding" Value="30,40"/>
             </Style>
             
+            <Style x:Key="InputFrameStyle" TargetType="Frame">
+                <Setter Property="BackgroundColor" Value="#F8F9FA"/>
+                <Setter Property="CornerRadius" Value="12"/>
+                <Setter Property="Padding" Value="15,5"/>
+                <Setter Property="HasShadow" Value="False"/>
+                <Setter Property="BorderColor" Value="Transparent"/>
+                <Setter Property="Margin" Value="0,5,0,0"/>
+            </Style>
+
             <Style x:Key="InputStyle" TargetType="Entry">
                 <Setter Property="BackgroundColor" Value="Transparent"/>
                 <Setter Property="TextColor" Value="#1A1A1A"/>
                 <Setter Property="FontSize" Value="16"/>
                 <Setter Property="PlaceholderColor" Value="#999"/>
-                <Setter Property="Margin" Value="0,20,0,0"/>
             </Style>
             
             <Style x:Key="PrimaryButtonStyle" TargetType="Button">
-                <Setter Property="BackgroundColor" Value="#4285F4"/>
+                <Setter Property="BackgroundColor" Value="#5527ad"/>
                 <Setter Property="TextColor" Value="White"/>
                 <Setter Property="FontSize" Value="16"/>
                 <Setter Property="FontAttributes" Value="Bold"/>
-                <Setter Property="CornerRadius" Value="12"/>
-                <Setter Property="HeightRequest" Value="50"/>
-                <Setter Property="Margin" Value="0,20,0,0"/>
+                <Setter Property="CornerRadius" Value="16"/>
+                <Setter Property="HeightRequest" Value="56"/>
+                <Setter Property="Margin" Value="0,30,0,0"/>
+                <Setter Property="Shadow">
+                    <Shadow Brush="Black" Offset="0,4" Opacity="0.2" Radius="5"/>
+                </Setter>
             </Style>
             
             <Style x:Key="SecondaryButtonStyle" TargetType="Button">
                 <Setter Property="BackgroundColor" Value="Transparent"/>
-                <Setter Property="TextColor" Value="#4285F4"/>
+                <Setter Property="TextColor" Value="#5527ad"/>
                 <Setter Property="FontSize" Value="16"/>
                 <Setter Property="FontAttributes" Value="Bold"/>
-                <Setter Property="CornerRadius" Value="12"/>
-                <Setter Property="HeightRequest" Value="50"/>
+                <Setter Property="CornerRadius" Value="16"/>
+                <Setter Property="HeightRequest" Value="56"/>
                 <Setter Property="Margin" Value="0,10,0,0"/>
-                <Setter Property="BorderColor" Value="#4285F4"/>
+                <Setter Property="BorderColor" Value="#5527ad"/>
                 <Setter Property="BorderWidth" Value="2"/>
             </Style>
         </ResourceDictionary>
@@ -58,52 +69,59 @@
         <Grid RowDefinitions="Auto,*">
             <!-- Header Section -->
             <Frame Grid.Row="0" Style="{StaticResource HeaderStyle}">
-                <StackLayout>
+                <StackLayout Spacing="10" Padding="0,0,0,40">
+                    <!-- Optional: Add Logo Image Here if available -->
+                    <!-- <Image Source="bell_icon.png" HeightRequest="64" WidthRequest="64" HorizontalOptions="Center" /> -->
+                    
                     <Label Text="BellManager" 
-                           FontSize="28" 
+                           FontSize="32" 
                            FontAttributes="Bold" 
                            TextColor="White" 
                            HorizontalOptions="Center"/>
                     <Label Text="Welcome back!" 
-                           FontSize="16" 
+                           FontSize="18" 
                            TextColor="#E3F2FD" 
                            HorizontalOptions="Center"
-                           Margin="0,8,0,0"/>
+                           Opacity="0.9"/>
                 </StackLayout>
             </Frame>
 
             <!-- Login Form Card -->
             <Frame Grid.Row="1" Style="{StaticResource CardStyle}">
-                <VerticalStackLayout Spacing="0">
-                    <Label Text="LOGIN" 
-                           FontSize="24" 
+                <VerticalStackLayout Spacing="20">
+                    <Label Text="Login" 
+                           FontSize="28" 
                            FontAttributes="Bold" 
-                           TextColor="#4285F4" 
+                           TextColor="#1A1A1A" 
                            HorizontalOptions="Center"
-                           Margin="0,0,0,30"/>
+                           Margin="0,0,0,10"/>
                     
                     <!-- Username/Email Field -->
-                    <StackLayout Margin="0,0,0,0">
+                    <VerticalStackLayout Spacing="5">
                         <Label Text="Email or Username" 
                                FontSize="14" 
-                               TextColor="#666" 
-                               Margin="0,0,0,5"/>
-                        <Entry x:Name="UsernameEntry" 
-                               Placeholder="Enter your email or username"
-                               Style="{StaticResource InputStyle}"/>
-                    </StackLayout>
+                               FontAttributes="Bold"
+                               TextColor="#555"/>
+                        <Frame Style="{StaticResource InputFrameStyle}">
+                            <Entry x:Name="UsernameEntry" 
+                                   Placeholder="Enter your email or username"
+                                   Style="{StaticResource InputStyle}"/>
+                        </Frame>
+                    </VerticalStackLayout>
                     
                     <!-- Password Field -->
-                    <StackLayout Margin="0,0,0,0">
+                    <VerticalStackLayout Spacing="5">
                         <Label Text="Password" 
                                FontSize="14" 
-                               TextColor="#666" 
-                               Margin="0,20,0,5"/>
-                        <Entry x:Name="PasswordEntry" 
-                               Placeholder="Enter your password"
-                               IsPassword="True"
-                               Style="{StaticResource InputStyle}"/>
-                    </StackLayout>
+                               FontAttributes="Bold"
+                               TextColor="#555"/>
+                        <Frame Style="{StaticResource InputFrameStyle}">
+                            <Entry x:Name="PasswordEntry" 
+                                   Placeholder="Enter your password"
+                                   IsPassword="True"
+                                   Style="{StaticResource InputStyle}"/>
+                        </Frame>
+                    </VerticalStackLayout>
                     
                     <!-- Login Button -->
                     <Button Text="LOGIN" 
@@ -121,6 +139,7 @@
                            IsVisible="False"
                            FontSize="14"
                            HorizontalOptions="Center"
+                           HorizontalTextAlignment="Center"
                            Margin="0,20,0,0"/>
                 </VerticalStackLayout>
             </Frame>
