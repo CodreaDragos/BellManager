@@ -5,6 +5,7 @@ using BellManager.Services;
 using BellManager.Helpers;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Linq;
 
 namespace BellManager.ViewModels
 {
@@ -155,46 +156,39 @@ namespace BellManager.ViewModels
             }
         }
 
-
         public bool HasBellName => !string.IsNullOrWhiteSpace(_originalAlarm.BellName);
 
         public string RepeatInfo
         {
             get
             {
-                // Check if your Alarm model has these repeat properties
-                // If not, you might need to add them or modify this logic
-                try
+                var alarm = _originalAlarm;
+                
+                // 1. Specific Date
+                if (alarm.SelectedDate.HasValue)
                 {
-                    var repeatDaily = GetPropertyValue<bool>("RepeatDaily");
-                    var repeatWeekly = GetPropertyValue<bool>("RepeatWeekly");
+                    return $"{alarm.SelectedDate.Value:MMM dd} (Once)";
+                }
 
-                    if (repeatDaily) return "Every day";
-
-                    if (repeatWeekly)
+                // 2. Days of Week
+                if (alarm.DaysOfWeek != null && alarm.DaysOfWeek.Any())
+                {
+                    var days = alarm.DaysOfWeek;
+                    if (alarm.IsRepeating)
                     {
-                        var days = new List<string>();
-                        if (GetPropertyValue<bool>("RepeatSun")) days.Add("Sun");
-                        if (GetPropertyValue<bool>("RepeatMon")) days.Add("Mon");
-                        if (GetPropertyValue<bool>("RepeatTue")) days.Add("Tue");
-                        if (GetPropertyValue<bool>("RepeatWed")) days.Add("Wed");
-                        if (GetPropertyValue<bool>("RepeatThu")) days.Add("Thu");
-                        if (GetPropertyValue<bool>("RepeatFri")) days.Add("Fri");
-                        if (GetPropertyValue<bool>("RepeatSat")) days.Add("Sat");
-
                         if (days.Count == 7) return "Every day";
-                        if (days.Count == 5 && !GetPropertyValue<bool>("RepeatSat") && !GetPropertyValue<bool>("RepeatSun"))
-                            return "Weekdays";
-                        if (days.Count == 2 && GetPropertyValue<bool>("RepeatSat") && GetPropertyValue<bool>("RepeatSun"))
-                            return "Weekends";
-                        return days.Count > 0 ? string.Join(", ", days) : "Once";
+                        if (days.Count == 2 && days.Contains("Sat") && days.Contains("Sun")) return "Weekends";
+                        if (days.Count == 5 && !days.Contains("Sat") && !days.Contains("Sun")) return "Weekdays";
+                        
+                        return $"Every {string.Join(", ", days)}";
+                    }
+                    else
+                    {
+                        return $"{string.Join(", ", days)} (Once)";
                     }
                 }
-                catch
-                {
-                    // If repeat properties don't exist, fall back to "Once"
-                }
 
+                // 3. Legacy/Fallback
                 return "Once";
             }
         }

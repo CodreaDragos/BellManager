@@ -16,9 +16,10 @@
             </Style>
 
             <Style x:Key="AlarmTimeStyle" TargetType="Label">
-                <Setter Property="FontSize" Value="32"/>
-                <Setter Property="FontAttributes" Value="Bold"/>
-                <Setter Property="TextColor" Value="#1A1A1A"/>
+                <Setter Property="FontSize" Value="48"/>
+                <Setter Property="FontAttributes" Value="None"/>
+                <Setter Property="TextColor" Value="#333"/>
+                <Setter Property="FontFamily" Value="OpenSansRegular"/>
             </Style>
 
             <Style x:Key="AlarmLabelStyle" TargetType="Label">
@@ -28,9 +29,10 @@
             </Style>
 
             <Style x:Key="RepeatInfoStyle" TargetType="Label">
-                <Setter Property="FontSize" Value="12"/>
-                <Setter Property="TextColor" Value="#999"/>
+                <Setter Property="FontSize" Value="13"/>
+                <Setter Property="TextColor" Value="#5527ad"/>
                 <Setter Property="Margin" Value="0,2,0,0"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
             </Style>
         </ResourceDictionary>
     </ContentPage.Resources>
@@ -46,10 +48,10 @@
         </Grid.RowDefinitions>
 
         <!-- Header Section -->
-        <Frame Grid.Row="0" BackgroundColor="#4285F4" CornerRadius="24" HasShadow="True" Padding="20,40,20,24">
-            <StackLayout>
-                <Label Text="Clock" FontSize="28" FontAttributes="Bold" TextColor="White" HorizontalOptions="Start"/>
-                <Label x:Name="CurrentTimeLabel" FontSize="16" TextColor="#E3F2FD" Margin="0,4,0,0"/>
+        <Frame Grid.Row="0" BackgroundColor="#5527ad" CornerRadius="0" HasShadow="False" Padding="20,20,20,20" BorderColor="Transparent">
+            <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                <Label Text="My Alarms" FontSize="24" FontAttributes="Bold" TextColor="White" VerticalOptions="Center"/>
+                <Label x:Name="CurrentTimeLabel" FontSize="14" TextColor="#E0E0E0" VerticalOptions="Center" HorizontalOptions="EndAndExpand"/>
             </StackLayout>
         </Frame>
 
@@ -61,58 +63,58 @@
                           BackgroundColor="Transparent">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <SwipeView>
-                            <SwipeView.RightItems>
-                                <SwipeItems Mode="Execute">
-                                    <SwipeItem Text="Delete" 
-                                             BackgroundColor="#F44336" 
-                                             Command="{Binding Path=BindingContext.DeleteCommand, Source={x:Reference AlarmsList}}" 
-                                             CommandParameter="{Binding .}" />
-                                </SwipeItems>
-                            </SwipeView.RightItems>
+                        <Frame Style="{StaticResource AlarmCardStyle}">
+                            <Grid Padding="20,16" ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto,Auto,Auto">
+                                
+                                <!-- Main Time Display -->
+                                <StackLayout Grid.Column="0" Grid.Row="0" Orientation="Horizontal" Spacing="0" VerticalOptions="End">
+                                    <Label Text="{Binding TimeDisplay}" Style="{StaticResource AlarmTimeStyle}"/>
+                                    <Label Text="{Binding AmPmDisplay}" FontSize="20" TextColor="#999" VerticalOptions="End" Margin="4,0,0,8"/>
+                                </StackLayout>
 
-                            <Frame Style="{StaticResource AlarmCardStyle}">
-                                <Grid Padding="20,16" ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto,Auto">
-                                    <Grid.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding Path=BindingContext.ItemTappedCommand, Source={x:Reference AlarmsList}}" 
-                                                            CommandParameter="{Binding .}" />
-                                    </Grid.GestureRecognizers>
+                                <!-- Enable/Disable Switch -->
+                                <Switch Grid.Column="1" Grid.Row="0" 
+                                      IsToggled="{Binding IsEnabled}" 
+                                      OnColor="#5527ad"
+                                      ThumbColor="White"
+                                      VerticalOptions="Center"/>
 
-                                    <!-- Main Time Display -->
-                                    <StackLayout Grid.Column="0" Grid.Row="0" Orientation="Horizontal" Spacing="0">
-                                        <Label Text="{Binding TimeDisplay}" Style="{StaticResource AlarmTimeStyle}"/>
-                                        <Label Text="{Binding AmPmDisplay}" FontSize="16" TextColor="#999" VerticalOptions="Start" Margin="4,8,0,0"/>
-                                    </StackLayout>
+                                <!-- Alarm Label -->
+                                <Label Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2"
+                                     Text="{Binding BellName}" 
+                                     Style="{StaticResource AlarmLabelStyle}"
+                                     IsVisible="{Binding HasBellName}"/>
 
-                                    <!-- Enable/Disable Switch -->
-                                    <Switch Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" 
-                                          IsToggled="{Binding IsEnabled}" 
-                                          OnColor="#4285F4"
-                                          ThumbColor="White"
-                                          VerticalOptions="Center"/>
+                                <!-- Repeat Information -->
+                                <Label Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2"
+                                     Text="{Binding RepeatInfo}" 
+                                     Style="{StaticResource RepeatInfoStyle}"
+                                     IsVisible="{Binding HasRepeatInfo}"/>
 
-                                    <!-- Alarm Label -->
-                                    <Label Grid.Column="0" Grid.Row="1" 
-                                         Text="{Binding BellName}" 
-                                         Style="{StaticResource AlarmLabelStyle}"
-                                         IsVisible="{Binding HasBellName}"/>
-
-                                    <!-- Repeat Information -->
-                                    <Label Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="1"
-                                         Text="{Binding RepeatInfo}" 
-                                         Style="{StaticResource RepeatInfoStyle}"
-                                         IsVisible="{Binding HasRepeatInfo}"/>
-
-                                    <!-- Status Indicator -->
-                                    <Ellipse Grid.Column="1" Grid.Row="2" 
-                                           Fill="{Binding StatusColor}" 
-                                           WidthRequest="8" 
-                                           HeightRequest="8" 
-                                           HorizontalOptions="Center"
-                                           IsVisible="{Binding IsEnabled}"/>
-                                </Grid>
-                            </Frame>
-                        </SwipeView>
+                                <!-- Action Buttons -->
+                                <StackLayout Grid.Row="3" Grid.ColumnSpan="2" Orientation="Horizontal" Spacing="16" Margin="0,16,0,0">
+                                    <Button Text="Edit" 
+                                            FontSize="14"
+                                            TextColor="#5527ad"
+                                            BackgroundColor="#F3E5F5"
+                                            CornerRadius="8"
+                                            HeightRequest="36"
+                                            Padding="16,0"
+                                            Command="{Binding Path=BindingContext.ItemTappedCommand, Source={x:Reference AlarmsList}}" 
+                                            CommandParameter="{Binding .}"/>
+                                    
+                                    <Button Text="Delete" 
+                                            FontSize="14"
+                                            TextColor="#D32F2F"
+                                            BackgroundColor="#FFEBEE"
+                                            CornerRadius="8"
+                                            HeightRequest="36"
+                                            Padding="16,0"
+                                            Command="{Binding Path=BindingContext.DeleteCommand, Source={x:Reference AlarmsList}}" 
+                                            CommandParameter="{Binding .}"/>
+                                </StackLayout>
+                            </Grid>
+                        </Frame>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
@@ -124,7 +126,7 @@
                HeightRequest="56" 
                WidthRequest="56" 
                Padding="0" 
-               BackgroundColor="#4285F4" 
+               BackgroundColor="#5527ad" 
                HasShadow="True" 
                VerticalOptions="End" 
                HorizontalOptions="Center" 
@@ -132,8 +134,8 @@
             <Button Text="+" 
                   BackgroundColor="Transparent" 
                   TextColor="White"
-                  FontSize="24"
-                  FontAttributes="Bold"
+                  FontSize="32"
+                  FontAttributes="None"
                   Command="{Binding AddCommand}" 
                   CornerRadius="28"/>
         </Frame>

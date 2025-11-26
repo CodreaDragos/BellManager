@@ -5,7 +5,7 @@ namespace BellManager.Models
 		public int Id { get; set; }
 		public string BellName { get; set; } = string.Empty;
 		public TimeOnly HourUtc { get; set; }
-		public string DaysOfWeek { get; set; } = string.Empty;
+		public List<string> DaysOfWeek { get; set; } = new List<string>();
 		public bool IsEnabled { get; set; } = true;
 		public string? Notes { get; set; }
 		

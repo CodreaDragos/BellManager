@@ -14,7 +14,8 @@ namespace BellManager.Api.Models
 		public TimeOnly HourUtc { get; set; }
 
 		// Bit flags for days of week (0=Sunday ... 6=Saturday) or simple string like "Mon,Tue"
-		public string DaysOfWeek { get; set; } = string.Empty;
+		// Bit flags for days of week (0=Sunday ... 6=Saturday) or simple string like "Mon,Tue"
+		public List<string> DaysOfWeek { get; set; } = new List<string>();
 
 		public bool IsEnabled { get; set; } = true;
 

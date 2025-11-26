@@ -29,7 +29,7 @@ namespace BellManager.Api.Data
 						v => v.ToString("HH:mm"),
 						v => TimeOnly.Parse(v))
 					.HasColumnName("hour_utc");
-				entity.Property(a => a.DaysOfWeek).HasMaxLength(64).HasColumnName("days_of_week");
+				entity.Property(a => a.DaysOfWeek).HasColumnName("days_of_week");
 				entity.Property(a => a.IsEnabled).HasColumnName("is_enabled");
 				entity.Property(a => a.Notes).HasMaxLength(1000).HasColumnName("notes");
 				

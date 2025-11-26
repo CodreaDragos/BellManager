@@ -31,7 +31,7 @@ namespace BellManager.Pages
                 {
                     if (CurrentTimeLabel != null)
                     {
-                        CurrentTimeLabel.Text = DateTime.Now.ToString("dddd, MMMM dd � • h:mm tt");
+                        CurrentTimeLabel.Text = DateTime.Now.ToString("dddd, MMMM dd • h:mm tt");
                     }
                 });
             };
@@ -40,7 +40,7 @@ namespace BellManager.Pages
             // Set initial time
             if (CurrentTimeLabel != null)
             {
-                CurrentTimeLabel.Text = DateTime.Now.ToString("dddd, MMMM dd � • h:mm tt");
+                CurrentTimeLabel.Text = DateTime.Now.ToString("dddd, MMMM dd • h:mm tt");
             }
         }
 

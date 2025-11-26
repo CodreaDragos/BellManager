@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BellManager - Download</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        .download-section {
+            text-align: center;
+            margin: 30px 0;
+        }
+        .download-btn {
+            display: inline-block;
+            background: linear-gradient(45deg, #FF6B6B, #4ECDC4);
+            color: white;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1.2em;
+            font-weight: bold;
+            margin: 10px;
+            transition: transform 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        .download-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        .info-box {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .requirements {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        .step {
+            margin: 10px 0;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+        }
+        .warning {
+            background: rgba(255, 193, 7, 0.2);
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔔 BellManager</h1>
+        
+        <div class="download-section">
+            <h2>Download Android App</h2>
+            <a href="https://github.com/CodreaDragos/BellManager/releases/latest/download/com.companyname.bellmanager-Signed.apk" 
+               class="download-btn" download>
+                📱 Download APK (v1.0.0)
+            </a>
+            <p style="margin-top: 15px; opacity: 0.9;">
+                File size: ~51 MB | Android 5.0+ required
+            </p>
+        </div>
+
+        <div class="info-box">
+            <h3>📋 Installation Instructions</h3>
+            <div class="step">
+                <strong>Step 1:</strong> Download the APK file above
+            </div>
+            <div class="step">
+                <strong>Step 2:</strong> On your Android device, go to Settings > Security > Install unknown apps
+            </div>
+            <div class="step">
+                <strong>Step 3:</strong> Enable "Allow from this source" for your browser or file manager
+            </div>
+            <div class="step">
+                <strong>Step 4:</strong> Open the downloaded APK file and follow the installation prompts
+            </div>
+        </div>
+
+        <div class="requirements">
+            <h3>📱 System Requirements</h3>
+            <ul>
+                <li>Android 5.0 (API level 21) or higher</li>
+                <li>Internet connection required</li>
+                <li>At least 100 MB free storage space</li>
+            </ul>
+        </div>
+
+        <div class="info-box">
+            <h3>✨ Features</h3>
+            <ul>
+                <li>Church bell management system</li>
+                <li>Schedule and manage alarms</li>
+                <li>User authentication and roles</li>
+                <li>Real-time notifications</li>
+                <li>Multi-church support</li>
+            </ul>
+        </div>
+
+        <div class="warning">
+            <strong>⚠️ Security Note:</strong> This app is not available on Google Play Store yet. 
+            Make sure you trust the source before installing. The APK is signed and verified.
+        </div>
+
+        <div style="text-align: center; margin-top: 30px; opacity: 0.8;">
+            <p>Need help? Contact us at: <a href="mailto:support@bellmanager.com" style="color: #4ECDC4;">support@bellmanager.com</a></p>
+            <p>Source code available on <a href="https://github.com/CodreaDragos/BellManager" style="color: #4ECDC4;">GitHub</a></p>
+        </div>
+    </div>
+</body>
+</html>

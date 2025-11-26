@@ -26,15 +26,7 @@ public static class MauiProgram
 
 
 		// Configure API base address
-		string apiBase;
-		if (DeviceInfo.Platform == DevicePlatform.Android)
-		{
-			apiBase = "https://bellmanager-production.up.railway.app/"; // Your laptop's current IP address on port 8080
-		}
-		else
-		{
-			apiBase = "https://bellmanager-production.up.railway.app/"; // iOS simulator/Windows/MacCatalyst on port 8080
-		}
+		string apiBase = "https://bellmanager-production.up.railway.app/";
 
 
 		builder.Services.AddSingleton(sp => new HttpClient { BaseAddress = new Uri(apiBase) });

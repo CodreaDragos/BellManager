@@ -24,6 +24,7 @@ namespace BellManager.Api.Controllers
 		public async Task<ActionResult<IEnumerable<AlarmTodayDto>>> GetToday()
 		{
 			var today = DateTime.Now;
+			var todayDate = DateOnly.FromDateTime(today);
 			var dayOfWeekShort = today.DayOfWeek switch
 			{
 				DayOfWeek.Sunday => "Sun",
@@ -36,9 +37,14 @@ namespace BellManager.Api.Controllers
 				_ => ""
 			};
 
+			// Get alarms that match either:
+			// 1. DaysOfWeek contains today's day (for recurring alarms)
+			// 2. SelectedDate matches today's date (for specific date alarms)
 			var alarms = await _dbContext.Alarms
 				.Include(a => a.Church)
-				.Where(a => a.IsEnabled && a.DaysOfWeek.Contains(dayOfWeekShort))
+				.Where(a => a.IsEnabled && 
+					(a.DaysOfWeek.Contains(dayOfWeekShort) || 
+					 (a.SelectedDate.HasValue && DateOnly.FromDateTime(a.SelectedDate.Value) == todayDate)))
 				.AsNoTracking()
 				.ToListAsync();
 
@@ -113,5 +119,3 @@ namespace BellManager.Api.Controllers
 		}
 	}
 }
-
-
