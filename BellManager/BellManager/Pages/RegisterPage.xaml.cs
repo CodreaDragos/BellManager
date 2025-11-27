@@ -68,6 +68,16 @@ public partial class RegisterPage : ContentPage
 		await Shell.Current.GoToAsync("//Login");
 	}
 
+	public void OnEnglishClicked(object sender, EventArgs e)
+	{
+		BellManager.Helpers.LocalizationResourceManager.Instance.SetCulture(new System.Globalization.CultureInfo("en"));
+	}
+
+	public void OnRomanianClicked(object sender, EventArgs e)
+	{
+		BellManager.Helpers.LocalizationResourceManager.Instance.SetCulture(new System.Globalization.CultureInfo("ro"));
+	}
+
 	private static bool IsValidEmail(string email)
 	{
 		if (string.IsNullOrWhiteSpace(email)) return false;

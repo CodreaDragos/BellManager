@@ -29,18 +29,27 @@ namespace BellManager.Pages
             {
                 MainThread.BeginInvokeOnMainThread(() =>
                 {
-                    if (CurrentTimeLabel != null)
-                    {
-                        CurrentTimeLabel.Text = DateTime.Now.ToString("dddd, MMMM dd • h:mm tt");
-                    }
+                    UpdateTimeLabel();
                 });
             };
             _clockTimer.Start();
 
             // Set initial time
+            UpdateTimeLabel();
+            
+            // Subscribe to culture changes
+            LocalizationResourceManager.Instance.PropertyChanged += (s, e) =>
+            {
+                UpdateTimeLabel();
+            };
+        }
+        
+        private void UpdateTimeLabel()
+        {
             if (CurrentTimeLabel != null)
             {
-                CurrentTimeLabel.Text = DateTime.Now.ToString("dddd, MMMM dd • h:mm tt");
+                var culture = BellManager.Resources.Strings.AppResources.Culture ?? System.Globalization.CultureInfo.CurrentCulture;
+                CurrentTimeLabel.Text = DateTime.Now.ToString("dddd, MMMM dd • h:mm tt", culture);
             }
         }
 

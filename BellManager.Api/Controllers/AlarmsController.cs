@@ -24,7 +24,6 @@ namespace BellManager.Api.Controllers
 		public async Task<ActionResult<IEnumerable<AlarmTodayDto>>> GetToday()
 		{
 			var today = DateTime.Now;
-			var todayDate = DateOnly.FromDateTime(today);
 			var dayOfWeekShort = today.DayOfWeek switch
 			{
 				DayOfWeek.Sunday => "Sun",
@@ -37,14 +36,9 @@ namespace BellManager.Api.Controllers
 				_ => ""
 			};
 
-			// Get alarms that match either:
-			// 1. DaysOfWeek contains today's day (for recurring alarms)
-			// 2. SelectedDate matches today's date (for specific date alarms)
 			var alarms = await _dbContext.Alarms
 				.Include(a => a.Church)
-				.Where(a => a.IsEnabled && 
-					(a.DaysOfWeek.Contains(dayOfWeekShort) || 
-					 (a.SelectedDate.HasValue && DateOnly.FromDateTime(a.SelectedDate.Value) == todayDate)))
+				.Where(a => a.IsEnabled && a.DaysOfWeek.Contains(dayOfWeekShort))
 				.AsNoTracking()
 				.ToListAsync();
 
@@ -87,6 +81,7 @@ namespace BellManager.Api.Controllers
 		[HttpPost]
 		public async Task<ActionResult<Alarm>> Create([FromBody] Alarm alarm)
 		{
+			Console.WriteLine($"[Create] Received Alarm: {alarm.BellName}, Days: {string.Join(",", alarm.DaysOfWeek ?? new List<string>())}");
 			var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
 			alarm.UserId = userId;
 			_dbContext.Alarms.Add(alarm);
@@ -97,6 +92,7 @@ namespace BellManager.Api.Controllers
 		[HttpPut("{id:int}")]
 		public async Task<IActionResult> Update(int id, [FromBody] Alarm updated)
 		{
+			Console.WriteLine($"[Update] Received Alarm ID {id}, Days: {string.Join(",", updated.DaysOfWeek ?? new List<string>())}");
 			if (id != updated.Id) return BadRequest();
 			var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
 			var exists = await _dbContext.Alarms.AnyAsync(a => a.Id == id && a.UserId == userId);
@@ -119,3 +115,5 @@ namespace BellManager.Api.Controllers
 		}
 	}
 }
+
+

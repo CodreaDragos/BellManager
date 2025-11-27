@@ -6,6 +6,9 @@
     xmlns:pages="clr-namespace:BellManager.Pages"
     xmlns:controls="clr-namespace:BellManager.Controls"
     Shell.FlyoutBehavior="Disabled"
+    Shell.TabBarBackgroundColor="#5527ad"
+    Shell.TabBarTitleColor="White"
+    Shell.TabBarUnselectedColor="#B39DDB"
     Title="BellManager">
 
     <TabBar x:Name="MainTabBar">

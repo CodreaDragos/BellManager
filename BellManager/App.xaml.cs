@@ -6,6 +6,9 @@
         {
             InitializeComponent();
 
+            // Force light theme to prevent dark mode issues
+            UserAppTheme = AppTheme.Light;
+
             MainPage = new AppShell();
         }
 

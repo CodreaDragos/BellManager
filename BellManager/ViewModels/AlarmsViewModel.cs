@@ -101,6 +101,12 @@ namespace BellManager.ViewModels
             {
                 notifyAlarm.PropertyChanged += (s, e) => OnPropertyChanged(e.PropertyName);
             }
+
+            // Subscribe to localization changes
+            LocalizationResourceManager.Instance.PropertyChanged += (s, e) => 
+            {
+                OnPropertyChanged(nameof(RepeatInfo));
+            };
         }
 
         // Delegate basic properties from the original alarm
@@ -167,7 +173,7 @@ namespace BellManager.ViewModels
                 // 1. Specific Date
                 if (alarm.SelectedDate.HasValue)
                 {
-                    return $"{alarm.SelectedDate.Value:MMM dd} (Once)";
+                    return string.Format(LocalizationResourceManager.Instance["OnceWithDate"].ToString(), alarm.SelectedDate.Value.ToString("MMM dd"));
                 }
 
                 // 2. Days of Week
@@ -176,21 +182,40 @@ namespace BellManager.ViewModels
                     var days = alarm.DaysOfWeek;
                     if (alarm.IsRepeating)
                     {
-                        if (days.Count == 7) return "Every day";
-                        if (days.Count == 2 && days.Contains("Sat") && days.Contains("Sun")) return "Weekends";
-                        if (days.Count == 5 && !days.Contains("Sat") && !days.Contains("Sun")) return "Weekdays";
+                        if (days.Count == 7) return LocalizationResourceManager.Instance["EveryDay"].ToString();
+                        if (days.Count == 2 && days.Contains("Sat") && days.Contains("Sun")) return LocalizationResourceManager.Instance["Weekends"].ToString();
+                        if (days.Count == 5 && !days.Contains("Sat") && !days.Contains("Sun")) return LocalizationResourceManager.Instance["Weekdays"].ToString();
                         
-                        return $"Every {string.Join(", ", days)}";
+                        // Translate day names
+                        var translatedDays = days.Select(d => TranslateDayName(d));
+                        return string.Format(LocalizationResourceManager.Instance["Every"].ToString(), string.Join(", ", translatedDays));
                     }
                     else
                     {
-                        return $"{string.Join(", ", days)} (Once)";
+                        // Translate day names
+                        var translatedDays = days.Select(d => TranslateDayName(d));
+                        return string.Format(LocalizationResourceManager.Instance["OnceWithDate"].ToString(), string.Join(", ", translatedDays));
                     }
                 }
 
                 // 3. Legacy/Fallback
-                return "Once";
+                return LocalizationResourceManager.Instance["RepeatTypeOnce"].ToString();
             }
+        }
+        
+        private string TranslateDayName(string dayAbbreviation)
+        {
+            return dayAbbreviation switch
+            {
+                "Sun" => LocalizationResourceManager.Instance["DaySun"].ToString(),
+                "Mon" => LocalizationResourceManager.Instance["DayMon"].ToString(),
+                "Tue" => LocalizationResourceManager.Instance["DayTue"].ToString(),
+                "Wed" => LocalizationResourceManager.Instance["DayWed"].ToString(),
+                "Thu" => LocalizationResourceManager.Instance["DayThu"].ToString(),
+                "Fri" => LocalizationResourceManager.Instance["DayFri"].ToString(),
+                "Sat" => LocalizationResourceManager.Instance["DaySat"].ToString(),
+                _ => dayAbbreviation
+            };
         }
 
         public bool HasRepeatInfo => RepeatInfo != "Once";

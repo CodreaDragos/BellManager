@@ -67,6 +67,16 @@ public partial class LoginPage : ContentPage
 	{
 		await Navigation.PushAsync(new RegisterPage());
 	}
+
+	public void OnEnglishClicked(object sender, EventArgs e)
+	{
+		BellManager.Helpers.LocalizationResourceManager.Instance.SetCulture(new System.Globalization.CultureInfo("en"));
+	}
+
+	public void OnRomanianClicked(object sender, EventArgs e)
+	{
+		BellManager.Helpers.LocalizationResourceManager.Instance.SetCulture(new System.Globalization.CultureInfo("ro"));
+	}
 }
 
 

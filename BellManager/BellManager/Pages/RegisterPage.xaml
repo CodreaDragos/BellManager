@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:helpers="clr-namespace:BellManager.Helpers"
              x:Class="BellManager.Pages.RegisterPage"
-             Title="Register"
+             Title="{Binding Source={x:Static helpers:LocalizationResourceManager.Instance}, Path=[RegisterTitle]}"
+             Shell.NavBarIsVisible="False"
              BackgroundColor="#F5F7FA">
 
     <ContentPage.Resources>
         <ResourceDictionary>
             <Style x:Key="HeaderStyle" TargetType="Frame">
-                <Setter Property="BackgroundColor" Value="#4285F4"/>
+                <Setter Property="BackgroundColor" Value="#5527ad"/>
                 <Setter Property="CornerRadius" Value="0"/>
                 <Setter Property="HasShadow" Value="True"/>
-                <Setter Property="Padding" Value="20,60,20,30"/>
+                <Setter Property="Padding" Value="20,20,20,30"/>
             </Style>
             
             <Style x:Key="CardStyle" TargetType="Frame">
@@ -22,29 +24,38 @@
                 <Setter Property="Padding" Value="30,40"/>
             </Style>
             
+            <Style x:Key="InputFrameStyle" TargetType="Frame">
+                <Setter Property="BackgroundColor" Value="#F8F9FA"/>
+                <Setter Property="CornerRadius" Value="12"/>
+                <Setter Property="Padding" Value="15,5"/>
+                <Setter Property="HasShadow" Value="False"/>
+                <Setter Property="BorderColor" Value="Transparent"/>
+                <Setter Property="Margin" Value="0,5,0,0"/>
+            </Style>
+
             <Style x:Key="InputStyle" TargetType="Entry">
                 <Setter Property="BackgroundColor" Value="Transparent"/>
                 <Setter Property="TextColor" Value="#1A1A1A"/>
                 <Setter Property="FontSize" Value="16"/>
                 <Setter Property="PlaceholderColor" Value="#999"/>
-                <Setter Property="Margin" Value="0,20,0,0"/>
             </Style>
             
             <Style x:Key="PrimaryButtonStyle" TargetType="Button">
-                <Setter Property="BackgroundColor" Value="#4285F4"/>
+                <Setter Property="BackgroundColor" Value="#5527ad"/>
                 <Setter Property="TextColor" Value="White"/>
                 <Setter Property="FontSize" Value="16"/>
                 <Setter Property="FontAttributes" Value="Bold"/>
-                <Setter Property="CornerRadius" Value="12"/>
-                <Setter Property="HeightRequest" Value="50"/>
-                <Setter Property="Margin" Value="0,20,0,0"/>
+                <Setter Property="CornerRadius" Value="16"/>
+                <Setter Property="HeightRequest" Value="56"/>
+                <Setter Property="Margin" Value="0,30,0,0"/>
             </Style>
             
             <Style x:Key="LinkStyle" TargetType="Label">
-                <Setter Property="TextColor" Value="#4285F4"/>
+                <Setter Property="TextColor" Value="#5527ad"/>
                 <Setter Property="FontSize" Value="14"/>
                 <Setter Property="HorizontalOptions" Value="Center"/>
                 <Setter Property="Margin" Value="0,20,0,0"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
             </Style>
         </ResourceDictionary>
     </ContentPage.Resources>
@@ -53,72 +64,101 @@
         <Grid RowDefinitions="Auto,*">
             <!-- Header Section -->
             <Frame Grid.Row="0" Style="{StaticResource HeaderStyle}">
-                <StackLayout>
-                    <Label Text="BellManager" 
-                           FontSize="28" 
-                           FontAttributes="Bold" 
-                           TextColor="White" 
-                           HorizontalOptions="Center"/>
-                    <Label Text="Join us today!" 
-                           FontSize="16" 
-                           TextColor="#E3F2FD" 
-                           HorizontalOptions="Center"
-                           Margin="0,8,0,0"/>
-                </StackLayout>
+                <Grid>
+                    <StackLayout HorizontalOptions="Center" VerticalOptions="Center" Margin="0,40,0,0">
+                        <Label Text="BellManager" 
+                               FontSize="32" 
+                               FontAttributes="Bold" 
+                               TextColor="White" 
+                               HorizontalOptions="Center"/>
+                        <Label Text="{Binding Source={x:Static helpers:LocalizationResourceManager.Instance}, Path=[JoinUs]}" 
+                               FontSize="18" 
+                               TextColor="#E3F2FD" 
+                               HorizontalOptions="Center"
+                               Margin="0,8,0,0"/>
+                    </StackLayout>
+                    
+                    <!-- Language Switcher -->
+                    <HorizontalStackLayout HorizontalOptions="End" VerticalOptions="Start" Spacing="16">
+                        <Label Text="🇬🇧" 
+                               FontSize="30"
+                               VerticalOptions="Center">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnEnglishClicked"/>
+                            </Label.GestureRecognizers>
+                        </Label>
+                        <Label Text="🇷🇴" 
+                               FontSize="30"
+                               VerticalOptions="Center">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnRomanianClicked"/>
+                            </Label.GestureRecognizers>
+                        </Label>
+                    </HorizontalStackLayout>
+                </Grid>
             </Frame>
 
             <!-- Register Form Card -->
             <Frame Grid.Row="1" Style="{StaticResource CardStyle}">
                 <VerticalStackLayout Spacing="0">
-                    <Label Text="REGISTER" 
+                    <Label Text="{Binding Source={x:Static helpers:LocalizationResourceManager.Instance}, Path=[RegisterTitle]}" 
                            FontSize="24" 
                            FontAttributes="Bold" 
-                           TextColor="#4285F4" 
+                           TextColor="#5527ad" 
                            HorizontalOptions="Center"
                            Margin="0,0,0,30"/>
                     
                     <!-- Email Field -->
-                    <StackLayout Margin="0,0,0,0">
+                    <StackLayout Margin="0,0,0,20">
                         <Label Text="Email" 
                                FontSize="14" 
                                TextColor="#666" 
+                               FontAttributes="Bold"
                                Margin="0,0,0,5"/>
-                        <Entry x:Name="EmailEntry" 
-                               Placeholder="Enter your email address"
-                               Keyboard="Email"
-                               Style="{StaticResource InputStyle}"/>
+                        <Frame Style="{StaticResource InputFrameStyle}">
+                            <Entry x:Name="EmailEntry" 
+                                   Placeholder="{Binding Source={x:Static helpers:LocalizationResourceManager.Instance}, Path=[EmailPlaceholder]}"
+                                   Keyboard="Email"
+                                   Style="{StaticResource InputStyle}"/>
+                        </Frame>
                     </StackLayout>
                     
                     <!-- Username Field -->
-                    <StackLayout Margin="0,0,0,0">
-                        <Label Text="Username" 
+                    <StackLayout Margin="0,0,0,20">
+                        <Label Text="{Binding Source={x:Static helpers:LocalizationResourceManager.Instance}, Path=[Username]}" 
                                FontSize="14" 
                                TextColor="#666" 
-                               Margin="0,20,0,5"/>
-                        <Entry x:Name="UsernameEntry" 
-                               Placeholder="Choose a username"
-                               Style="{StaticResource InputStyle}"/>
+                               FontAttributes="Bold"
+                               Margin="0,0,0,5"/>
+                        <Frame Style="{StaticResource InputFrameStyle}">
+                            <Entry x:Name="UsernameEntry" 
+                                   Placeholder="{Binding Source={x:Static helpers:LocalizationResourceManager.Instance}, Path=[UsernamePlaceholder]}"
+                                   Style="{StaticResource InputStyle}"/>
+                        </Frame>
                     </StackLayout>
                     
                     <!-- Password Field -->
-                    <StackLayout Margin="0,0,0,0">
-                        <Label Text="Password" 
+                    <StackLayout Margin="0,0,0,10">
+                        <Label Text="{Binding Source={x:Static helpers:LocalizationResourceManager.Instance}, Path=[Password]}" 
                                FontSize="14" 
                                TextColor="#666" 
-                               Margin="0,20,0,5"/>
-                        <Entry x:Name="PasswordEntry" 
-                               Placeholder="Create a secure password"
-                               IsPassword="True"
-                               Style="{StaticResource InputStyle}"/>
+                               FontAttributes="Bold"
+                               Margin="0,0,0,5"/>
+                        <Frame Style="{StaticResource InputFrameStyle}">
+                            <Entry x:Name="PasswordEntry" 
+                                   Placeholder="{Binding Source={x:Static helpers:LocalizationResourceManager.Instance}, Path=[PasswordPlaceholder]}"
+                                   IsPassword="True"
+                                   Style="{StaticResource InputStyle}"/>
+                        </Frame>
                     </StackLayout>
                     
                     <!-- Create Account Button -->
-                    <Button Text="CREATE ACCOUNT" 
+                    <Button Text="{Binding Source={x:Static helpers:LocalizationResourceManager.Instance}, Path=[CreateAccountButton]}" 
                             Clicked="OnRegisterClicked" 
                             Style="{StaticResource PrimaryButtonStyle}"/>
                     
                     <!-- Login Link -->
-                    <Label Text="Already have an account? Sign In" 
+                    <Label Text="{Binding Source={x:Static helpers:LocalizationResourceManager.Instance}, Path=[AlreadyHaveAccount]}" 
                            Style="{StaticResource LinkStyle}">
                         <Label.GestureRecognizers>
                             <TapGestureRecognizer Tapped="OnLoginTapped" />
@@ -137,5 +177,3 @@
         </Grid>
     </ScrollView>
 </ContentPage>
-
-
