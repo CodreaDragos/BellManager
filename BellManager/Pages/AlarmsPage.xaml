@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:helpers="clr-namespace:BellManager.Helpers"
              x:Class="BellManager.Pages.AlarmsPage"
-             Title="Clock"
+             Title="{Binding Source={x:Static helpers:LocalizationResourceManager.Instance}, Path=[Clock]}"
              BackgroundColor="#F5F7FA">
 
     <ContentPage.Resources>
@@ -38,7 +39,7 @@
     </ContentPage.Resources>
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Logout" Clicked="OnLogoutClicked" />
+        <ToolbarItem Text="{Binding Source={x:Static helpers:LocalizationResourceManager.Instance}, Path=[Logout]}" Clicked="OnLogoutClicked" />
     </ContentPage.ToolbarItems>
 
     <Grid>
@@ -50,7 +51,7 @@
         <!-- Header Section -->
         <Frame Grid.Row="0" BackgroundColor="#5527ad" CornerRadius="0" HasShadow="False" Padding="20,20,20,20" BorderColor="Transparent">
             <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
-                <Label Text="My Alarms" FontSize="24" FontAttributes="Bold" TextColor="White" VerticalOptions="Center"/>
+                <Label Text="{Binding Source={x:Static helpers:LocalizationResourceManager.Instance}, Path=[MyAlarmsTitle]}" FontSize="24" FontAttributes="Bold" TextColor="White" VerticalOptions="Center"/>
                 <Label x:Name="CurrentTimeLabel" FontSize="14" TextColor="#E0E0E0" VerticalOptions="Center" HorizontalOptions="EndAndExpand"/>
             </StackLayout>
         </Frame>
@@ -93,7 +94,7 @@
 
                                 <!-- Action Buttons -->
                                 <StackLayout Grid.Row="3" Grid.ColumnSpan="2" Orientation="Horizontal" Spacing="16" Margin="0,16,0,0">
-                                    <Button Text="Edit" 
+                                    <Button Text="{Binding Source={x:Static helpers:LocalizationResourceManager.Instance}, Path=[Edit]}" 
                                             FontSize="14"
                                             TextColor="#5527ad"
                                             BackgroundColor="#F3E5F5"
@@ -103,7 +104,7 @@
                                             Command="{Binding Path=BindingContext.ItemTappedCommand, Source={x:Reference AlarmsList}}" 
                                             CommandParameter="{Binding .}"/>
                                     
-                                    <Button Text="Delete" 
+                                    <Button Text="{Binding Source={x:Static helpers:LocalizationResourceManager.Instance}, Path=[Delete]}" 
                                             FontSize="14"
                                             TextColor="#D32F2F"
                                             BackgroundColor="#FFEBEE"
@@ -136,6 +137,8 @@
                   TextColor="White"
                   FontSize="32"
                   FontAttributes="None"
+                  HorizontalOptions="Center"
+                  VerticalOptions="Center"
                   Command="{Binding AddCommand}" 
                   CornerRadius="28"/>
         </Frame>

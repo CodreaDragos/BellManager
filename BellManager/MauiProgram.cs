@@ -26,6 +26,7 @@ public static class MauiProgram
 
 
 		// Configure API base address
+		// Using Railway production backend
 		string apiBase = "https://bellmanager-production.up.railway.app/";
 
 

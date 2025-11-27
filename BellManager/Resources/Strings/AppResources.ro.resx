@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="BellName" xml:space="preserve">
+    <value>Nume Clopot</value>
+  </data>
+  <data name="BellNamePlaceholder" xml:space="preserve">
+    <value>Introduceți numele clopotului</value>
+  </data>
+  <data name="Church" xml:space="preserve">
+    <value>Biserică</value>
+  </data>
+  <data name="CreateAccountButton" xml:space="preserve">
+    <value>CREEAZĂ CONT</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Șterge</value>
+  </data>
+  <data name="DeleteAlarmButton" xml:space="preserve">
+    <value>Șterge Alarma</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Editează</value>
+  </data>
+  <data name="EditAlarmTitle" xml:space="preserve">
+    <value>Editează Alarma</value>
+  </data>
+  <data name="EmailOrUsername" xml:space="preserve">
+    <value>Email sau Nume Utilizator</value>
+  </data>
+  <data name="EmailPlaceholder" xml:space="preserve">
+    <value>Introduceți email sau nume utilizator</value>
+  </data>
+  <data name="Enabled" xml:space="preserve">
+    <value>Activat</value>
+  </data>
+  <data name="LanguageButton" xml:space="preserve">
+    <value>EN</value>
+  </data>
+  <data name="LoginButton" xml:space="preserve">
+    <value>AUTENTIFICARE</value>
+  </data>
+  <data name="LoginTitle" xml:space="preserve">
+    <value>Autentificare</value>
+  </data>
+  <data name="Logout" xml:space="preserve">
+    <value>Deconectare</value>
+  </data>
+  <data name="MyAlarmsTitle" xml:space="preserve">
+    <value>Alarmele Mele</value>
+  </data>
+  <data name="NewAlarmTitle" xml:space="preserve">
+    <value>Alarmă Nouă</value>
+  </data>
+  <data name="NoAlarmsFound" xml:space="preserve">
+    <value>Nu s-au găsit alarme</value>
+  </data>
+  <data name="Notes" xml:space="preserve">
+    <value>Note</value>
+  </data>
+  <data name="NotesPlaceholder" xml:space="preserve">
+    <value>Introduceți note aici</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Parolă</value>
+  </data>
+  <data name="PasswordPlaceholder" xml:space="preserve">
+    <value>Introduceți parola</value>
+  </data>
+  <data name="Repeat" xml:space="preserve">
+    <value>Repetă</value>
+  </data>
+  <data name="RepeatTypeCustom" xml:space="preserve">
+    <value>Personalizat</value>
+  </data>
+  <data name="RepeatTypeOnce" xml:space="preserve">
+    <value>O dată</value>
+  </data>
+  <data name="RepeatTypeSunday" xml:space="preserve">
+    <value>În fiecare Duminică</value>
+  </data>
+  <data name="SaveAlarmButton" xml:space="preserve">
+    <value>Salvează Alarma</value>
+  </data>
+  <data name="TapToAdd" xml:space="preserve">
+    <value>Apasă + pentru a adăuga</value>
+  </data>
+  <data name="Time" xml:space="preserve">
+    <value>Ora</value>
+  </data>
+  <data name="WelcomeBack" xml:space="preserve">
+    <value>Bine ai revenit!</value>
+  </data>
+  <data name="RegisterTitle" xml:space="preserve">
+    <value>Înregistrare</value>
+  </data>
+  <data name="JoinUs" xml:space="preserve">
+    <value>Alătură-te nouă!</value>
+  </data>
+  <data name="Username" xml:space="preserve">
+    <value>Nume Utilizator</value>
+  </data>
+  <data name="UsernamePlaceholder" xml:space="preserve">
+    <value>Alege un nume de utilizator</value>
+  </data>
+  <data name="AlreadyHaveAccount" xml:space="preserve">
+    <value>Ai deja cont? Autentifică-te</value>
+  </data>
+  <data name="SignIn" xml:space="preserve">
+    <value>Autentificare</value>
+  </data>
+  <data name="DayMon" xml:space="preserve">
+    <value>Lun</value>
+  </data>
+  <data name="DayTue" xml:space="preserve">
+    <value>Mar</value>
+  </data>
+  <data name="DayWed" xml:space="preserve">
+    <value>Mie</value>
+  </data>
+  <data name="DayThu" xml:space="preserve">
+    <value>Joi</value>
+  </data>
+  <data name="DayFri" xml:space="preserve">
+    <value>Vin</value>
+  </data>
+  <data name="DaySat" xml:space="preserve">
+    <value>Sâm</value>
+  </data>
+  <data name="DaySun" xml:space="preserve">
+    <value>Dum</value>
+  </data>
+  <data name="AdminAssignTitle" xml:space="preserve">
+    <value>Asignare Utilizator-Biserică</value>
+  </data>
+  <data name="AdminAssignSubtitle" xml:space="preserve">
+    <value>Asignează utilizatori la bisericile lor</value>
+  </data>
+  <data name="AdminChurchesTitle" xml:space="preserve">
+    <value>Gestionare Biserici</value>
+  </data>
+  <data name="AdminChurchesSubtitle" xml:space="preserve">
+    <value>Gestionează informații și asignări biserici</value>
+  </data>
+  <data name="AssignUser" xml:space="preserve">
+    <value>Asignează Utilizator la Biserică</value>
+  </data>
+  <data name="SelectUser" xml:space="preserve">
+    <value>Selectează Utilizator</value>
+  </data>
+  <data name="SelectChurch" xml:space="preserve">
+    <value>Selectează Biserică</value>
+  </data>
+  <data name="CurrentAssignments" xml:space="preserve">
+    <value>Asignări Curente</value>
+  </data>
+  <data name="AddNewChurch" xml:space="preserve">
+    <value>Adaugă Biserică Nouă</value>
+  </data>
+  <data name="ChurchNamePlaceholder" xml:space="preserve">
+    <value>Nume Biserică</value>
+  </data>
+  <data name="PhonePlaceholder" xml:space="preserve">
+    <value>Număr de Telefon</value>
+  </data>
+  <data name="AddChurchButton" xml:space="preserve">
+    <value>Adaugă Biserică</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Salvează</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Anulează</value>
+  </data>
+  <data name="EditAssignment" xml:space="preserve">
+    <value>Editează Asignarea</value>
+  </data>
+  <data name="ChurchNamePlaceholder" xml:space="preserve">
+    <value>Nume Biserică</value>
+  </data>
+  <data name="PhonePlaceholder" xml:space="preserve">
+    <value>Număr de Telefon</value>
+  </data>
+  <data name="TotalChurchesPrefix" xml:space="preserve">
+    <value>Total Biserici: </value>
+  </data>
+  <data name="EditChurch" xml:space="preserve">
+    <value>Editează Biserică</value>
+  </data>
+  <data name="EditAlarmSubtitle" xml:space="preserve">
+    <value>Setează detaliile alarmei</value>
+  </data>
+  <data name="SelectRepeatType" xml:space="preserve">
+    <value>Selectează tipul de repetare</value>
+  </data>
+  <data name="RepeatEveryWeek" xml:space="preserve">
+    <value>Repetă în fiecare săptămână</value>
+  </data>
+  <data name="SelectSpecificDays" xml:space="preserve">
+    <value>Selectează zile specifice:</value>
+  </data>
+  <data name="OrSelectSpecificDate" xml:space="preserve">
+    <value>Sau selectează o dată specifică:</value>
+  </data>
+  <data name="ScheduledFor" xml:space="preserve">
+    <value>Programat pentru:</value>
+  </data>
+  <data name="EnableAlarm" xml:space="preserve">
+    <value>Activează această alarmă</value>
+  </data>
+  <data name="RepeatExplanationEveryDay" xml:space="preserve">
+    <value>Această alarmă se va repeta în fiecare zi</value>
+  </data>
+  <data name="RepeatExplanationWeekends" xml:space="preserve">
+    <value>Această alarmă se va repeta în weekend</value>
+  </data>
+  <data name="RepeatExplanationWeekdays" xml:space="preserve">
+    <value>Această alarmă se va repeta în zilele lucrătoare</value>
+  </data>
+  <data name="RepeatExplanationEvery" xml:space="preserve">
+    <value>Această alarmă se va repeta în fiecare {0}</value>
+  </data>
+  <data name="RepeatExplanationOnce" xml:space="preserve">
+    <value>Această alarmă va suna o singură dată pe {0}</value>
+  </data>
+  <data name="RepeatExplanationOnceGeneric" xml:space="preserve">
+    <value>Această alarmă va suna o singură dată</value>
+  </data>
+  <data name="RepeatExplanationCustomRepeating" xml:space="preserve">
+    <value>Această alarmă se va repeta în fiecare săptămână în zilele selectate</value>
+  </data>
+  <data name="RepeatExplanationCustomOnce" xml:space="preserve">
+    <value>Această alarmă va suna o singură dată la următoarea apariție a zilei selectate</value>
+  </data>
+  <data name="RepeatExplanationSunday" xml:space="preserve">
+    <value>Această alarmă se va repeta în fiecare Duminică</value>
+  </data>
+  <data name="RepeatExplanationOnceTodayTomorrow" xml:space="preserve">
+    <value>Această alarmă va suna o singură dată la ora specificată (Azi dacă ora nu a trecut, altfel mâine)</value>
+  </data>
+  <data name="RepeatExplanationNextSunday" xml:space="preserve">
+    <value>Această alarmă va suna o singură dată Duminica viitoare</value>
+  </data>
+  <data name="EveryDay" xml:space="preserve">
+    <value>În fiecare zi</value>
+  </data>
+  <data name="Weekends" xml:space="preserve">
+    <value>Weekend-uri</value>
+  </data>
+  <data name="Weekdays" xml:space="preserve">
+    <value>Zile lucrătoare</value>
+  </data>
+  <data name="Every" xml:space="preserve">
+    <value>În fiecare {0}</value>
+  </data>
+  <data name="OnceWithDate" xml:space="preserve">
+    <value>{0} (O dată)</value>
+  </data>
+  <data name="Clock" xml:space="preserve">
+    <value>Ceas</value>
+  </data>
+  <data name="DaySun" xml:space="preserve">
+    <value>Dum</value>
+  </data>
+  <data name="DayMon" xml:space="preserve">
+    <value>Lun</value>
+  </data>
+  <data name="DayTue" xml:space="preserve">
+    <value>Mar</value>
+  </data>
+  <data name="DayWed" xml:space="preserve">
+    <value>Mie</value>
+  </data>
+  <data name="DayThu" xml:space="preserve">
+    <value>Joi</value>
+  </data>
+  <data name="DayFri" xml:space="preserve">
+    <value>Vin</value>
+  </data>
+  <data name="DaySat" xml:space="preserve">
+    <value>Sâm</value>
+  </data>
+</root>

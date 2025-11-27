@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="BellName" xml:space="preserve">
+    <value>Bell Name</value>
+  </data>
+  <data name="BellNamePlaceholder" xml:space="preserve">
+    <value>Enter bell name</value>
+  </data>
+  <data name="Church" xml:space="preserve">
+    <value>Church</value>
+  </data>
+  <data name="CreateAccountButton" xml:space="preserve">
+    <value>CREATE ACCOUNT</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="DeleteAlarmButton" xml:space="preserve">
+    <value>Delete Alarm</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="EditAlarmTitle" xml:space="preserve">
+    <value>Edit Alarm</value>
+  </data>
+  <data name="EmailOrUsername" xml:space="preserve">
+    <value>Email or Username</value>
+  </data>
+  <data name="EmailPlaceholder" xml:space="preserve">
+    <value>Enter your email or username</value>
+  </data>
+  <data name="Enabled" xml:space="preserve">
+    <value>Enabled</value>
+  </data>
+  <data name="LanguageButton" xml:space="preserve">
+    <value>RO</value>
+  </data>
+  <data name="LoginButton" xml:space="preserve">
+    <value>LOGIN</value>
+  </data>
+  <data name="LoginTitle" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="Logout" xml:space="preserve">
+    <value>Logout</value>
+  </data>
+  <data name="MyAlarmsTitle" xml:space="preserve">
+    <value>My Alarms</value>
+  </data>
+  <data name="NewAlarmTitle" xml:space="preserve">
+    <value>New Alarm</value>
+  </data>
+  <data name="NoAlarmsFound" xml:space="preserve">
+    <value>No alarms found</value>
+  </data>
+  <data name="Notes" xml:space="preserve">
+    <value>Notes</value>
+  </data>
+  <data name="NotesPlaceholder" xml:space="preserve">
+    <value>Enter notes here</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="PasswordPlaceholder" xml:space="preserve">
+    <value>Enter your password</value>
+  </data>
+  <data name="Repeat" xml:space="preserve">
+    <value>Repeat</value>
+  </data>
+  <data name="RepeatTypeCustom" xml:space="preserve">
+    <value>Custom</value>
+  </data>
+  <data name="RepeatTypeOnce" xml:space="preserve">
+    <value>Once</value>
+  </data>
+  <data name="RepeatTypeSunday" xml:space="preserve">
+    <value>Every Sunday</value>
+  </data>
+  <data name="SaveAlarmButton" xml:space="preserve">
+    <value>Save Alarm</value>
+  </data>
+  <data name="TapToAdd" xml:space="preserve">
+    <value>Tap + to add one</value>
+  </data>
+  <data name="Time" xml:space="preserve">
+    <value>Time</value>
+  </data>
+  <data name="WelcomeBack" xml:space="preserve">
+    <value>Welcome back!</value>
+  </data>
+  <data name="RegisterTitle" xml:space="preserve">
+    <value>Register</value>
+  </data>
+  <data name="JoinUs" xml:space="preserve">
+    <value>Join us today!</value>
+  </data>
+  <data name="Username" xml:space="preserve">
+    <value>Username</value>
+  </data>
+  <data name="UsernamePlaceholder" xml:space="preserve">
+    <value>Choose a username</value>
+  </data>
+  <data name="AlreadyHaveAccount" xml:space="preserve">
+    <value>Already have an account? Sign In</value>
+  </data>
+  <data name="SignIn" xml:space="preserve">
+    <value>Sign In</value>
+  </data>
+  <data name="DayMon" xml:space="preserve">
+    <value>Mon</value>
+  </data>
+  <data name="DayTue" xml:space="preserve">
+    <value>Tue</value>
+  </data>
+  <data name="DayWed" xml:space="preserve">
+    <value>Wed</value>
+  </data>
+  <data name="DayThu" xml:space="preserve">
+    <value>Thu</value>
+  </data>
+  <data name="DayFri" xml:space="preserve">
+    <value>Fri</value>
+  </data>
+  <data name="DaySat" xml:space="preserve">
+    <value>Sat</value>
+  </data>
+  <data name="DaySun" xml:space="preserve">
+    <value>Sun</value>
+  </data>
+  <data name="AdminAssignTitle" xml:space="preserve">
+    <value>User-Church Assignment</value>
+  </data>
+  <data name="AdminAssignSubtitle" xml:space="preserve">
+    <value>Assign users to their respective churches</value>
+  </data>
+  <data name="AdminChurchesTitle" xml:space="preserve">
+    <value>Churches Management</value>
+  </data>
+  <data name="AdminChurchesSubtitle" xml:space="preserve">
+    <value>Manage church information and assignments</value>
+  </data>
+  <data name="AssignUser" xml:space="preserve">
+    <value>Assign User to Church</value>
+  </data>
+  <data name="SelectUser" xml:space="preserve">
+    <value>Select User</value>
+  </data>
+  <data name="SelectChurch" xml:space="preserve">
+    <value>Select Church</value>
+  </data>
+  <data name="CurrentAssignments" xml:space="preserve">
+    <value>Current Assignments</value>
+  </data>
+  <data name="AddNewChurch" xml:space="preserve">
+    <value>Add New Church</value>
+  </data>
+  <data name="ChurchNamePlaceholder" xml:space="preserve">
+    <value>Church Name</value>
+  </data>
+  <data name="PhonePlaceholder" xml:space="preserve">
+    <value>Phone Number</value>
+  </data>
+  <data name="AddChurchButton" xml:space="preserve">
+    <value>Add Church</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="EditAssignment" xml:space="preserve">
+    <value>Edit Assignment</value>
+  </data>
+  <data name="ChurchNamePlaceholder" xml:space="preserve">
+    <value>Church Name</value>
+  </data>
+  <data name="PhonePlaceholder" xml:space="preserve">
+    <value>Phone Number</value>
+  </data>
+  <data name="TotalChurchesPrefix" xml:space="preserve">
+    <value>Total Churches: </value>
+  </data>
+  <data name="EditChurch" xml:space="preserve">
+    <value>Edit Church</value>
+  </data>
+  <data name="EditAlarmSubtitle" xml:space="preserve">
+    <value>Set your alarm details</value>
+  </data>
+  <data name="SelectRepeatType" xml:space="preserve">
+    <value>Select repeat type</value>
+  </data>
+  <data name="RepeatEveryWeek" xml:space="preserve">
+    <value>Repeat every week</value>
+  </data>
+  <data name="SelectSpecificDays" xml:space="preserve">
+    <value>Select specific days:</value>
+  </data>
+  <data name="OrSelectSpecificDate" xml:space="preserve">
+    <value>Or select a specific date:</value>
+  </data>
+  <data name="ScheduledFor" xml:space="preserve">
+    <value>Scheduled for:</value>
+  </data>
+  <data name="EnableAlarm" xml:space="preserve">
+    <value>Enable this alarm</value>
+  </data>
+  <data name="RepeatExplanationEveryDay" xml:space="preserve">
+    <value>This alarm will repeat every day</value>
+  </data>
+  <data name="RepeatExplanationWeekends" xml:space="preserve">
+    <value>This alarm will repeat on weekends</value>
+  </data>
+  <data name="RepeatExplanationWeekdays" xml:space="preserve">
+    <value>This alarm will repeat on weekdays</value>
+  </data>
+  <data name="RepeatExplanationEvery" xml:space="preserve">
+    <value>This alarm will repeat every {0}</value>
+  </data>
+  <data name="RepeatExplanationOnce" xml:space="preserve">
+    <value>This alarm will ring once on {0}</value>
+  </data>
+  <data name="RepeatExplanationOnceGeneric" xml:space="preserve">
+    <value>This alarm will ring once</value>
+  </data>
+  <data name="RepeatExplanationCustomRepeating" xml:space="preserve">
+    <value>This alarm will repeat every week on the selected days</value>
+  </data>
+  <data name="RepeatExplanationCustomOnce" xml:space="preserve">
+    <value>This alarm will ring once on the next occurrence of the selected day</value>
+  </data>
+  <data name="RepeatExplanationSunday" xml:space="preserve">
+    <value>This alarm will repeat every Sunday</value>
+  </data>
+  <data name="RepeatExplanationOnceTodayTomorrow" xml:space="preserve">
+    <value>This alarm will ring once at the specified time (Today if time hasn't passed, otherwise tomorrow)</value>
+  </data>
+  <data name="RepeatExplanationNextSunday" xml:space="preserve">
+    <value>This alarm will ring once on the next Sunday</value>
+  </data>
+  <data name="EveryDay" xml:space="preserve">
+    <value>Every day</value>
+  </data>
+  <data name="Weekends" xml:space="preserve">
+    <value>Weekends</value>
+  </data>
+  <data name="Weekdays" xml:space="preserve">
+    <value>Weekdays</value>
+  </data>
+  <data name="Every" xml:space="preserve">
+    <value>Every {0}</value>
+  </data>
+  <data name="OnceWithDate" xml:space="preserve">
+    <value>{0} (Once)</value>
+  </data>
+  <data name="Clock" xml:space="preserve">
+    <value>Clock</value>
+  </data>
+  <data name="DaySun" xml:space="preserve">
+    <value>Sun</value>
+  </data>
+  <data name="DayMon" xml:space="preserve">
+    <value>Mon</value>
+  </data>
+  <data name="DayTue" xml:space="preserve">
+    <value>Tue</value>
+  </data>
+  <data name="DayWed" xml:space="preserve">
+    <value>Wed</value>
+  </data>
+  <data name="DayThu" xml:space="preserve">
+    <value>Thu</value>
+  </data>
+  <data name="DayFri" xml:space="preserve">
+    <value>Fri</value>
+  </data>
+  <data name="DaySat" xml:space="preserve">
+    <value>Sat</value>
+  </data>
+</root>

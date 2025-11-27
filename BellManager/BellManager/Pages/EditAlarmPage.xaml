@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:helpers="clr-namespace:BellManager.Helpers"
+             x:Class="BellManager.Pages.EditAlarmPage"
+             Title="{Binding Source={x:Static helpers:LocalizationResourceManager.Instance}, Path=[EditAlarmTitle]}">
+    <ScrollView>
+        <VerticalStackLayout Padding="16" Spacing="12">
+            <!-- Header -->
+            <Frame BackgroundColor="#5527ad" CornerRadius="16" Padding="20">
+                <VerticalStackLayout>
+                    <Label Text="{Binding Source={x:Static helpers:LocalizationResourceManager.Instance}, Path=[EditAlarmTitle]}" FontSize="24" FontAttributes="Bold" TextColor="White" />
+                    <Label Text="{Binding Source={x:Static helpers:LocalizationResourceManager.Instance}, Path=[EditAlarmSubtitle]}" FontSize="16" TextColor="#E3F2FD" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Church Information -->
+            <Frame BackgroundColor="#5527ad" CornerRadius="16" Padding="16" HasShadow="True" IsVisible="{Binding HasChurch}">
+                <VerticalStackLayout>
+                    <Label Text="{Binding Source={x:Static helpers:LocalizationResourceManager.Instance}, Path=[Church]}" FontSize="14" FontAttributes="Bold" TextColor="#E3F2FD" />
+                    <Label Text="{Binding ChurchName}" FontSize="16" TextColor="White" />
+                    <Label Text="{Binding ChurchPhone}" FontSize="14" TextColor="#B39DDB" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Bell Name -->
+            <Frame BackgroundColor="White" CornerRadius="16" Padding="16" HasShadow="True">
+                <VerticalStackLayout>
+                    <Label Text="{Binding Source={x:Static helpers:LocalizationResourceManager.Instance}, Path=[BellName]}" FontSize="16" FontAttributes="Bold" TextColor="#1A1A1A" />
+                    <Entry Placeholder="{Binding Source={x:Static helpers:LocalizationResourceManager.Instance}, Path=[BellNamePlaceholder]}" Text="{Binding BellName}" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Time Selection -->
+            <Frame BackgroundColor="White" CornerRadius="16" Padding="20" HasShadow="True">
+                <VerticalStackLayout Spacing="16">
+                    <Label Text="{Binding Source={x:Static helpers:LocalizationResourceManager.Instance}, Path=[Time]}" FontSize="18" FontAttributes="Bold" TextColor="#1A1A1A" HorizontalOptions="Center" />
+                    
+                    <!-- Standard Time Picker -->
+                    <Frame BackgroundColor="#F8F9FA" CornerRadius="12" Padding="16" HasShadow="False">
+                        <TimePicker Time="{Binding SelectedTime}" 
+                                  Format="HH:mm" 
+                                  FontSize="32" 
+                                  FontAttributes="Bold" 
+                                  TextColor="#5527ad" 
+                                  BackgroundColor="Transparent" 
+                                  HorizontalOptions="Center" />
+                    </Frame>
+                    
+
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Repeat Options -->
+            <Frame BackgroundColor="White" CornerRadius="16" Padding="16" HasShadow="True">
+                <VerticalStackLayout>
+                    <Label Text="{Binding Source={x:Static helpers:LocalizationResourceManager.Instance}, Path=[Repeat]}" FontSize="16" FontAttributes="Bold" TextColor="#1A1A1A" />
+                    
+                    <!-- Repeat Type Selection -->
+                    <Picker x:Name="RepeatTypePicker" 
+                            Title="{Binding Source={x:Static helpers:LocalizationResourceManager.Instance}, Path=[SelectRepeatType]}" 
+                            SelectedIndex="{Binding SelectedRepeatTypeIndex}"
+                            ItemsSource="{Binding RepeatTypeOptions}" />
+                    
+                    <!-- Repeat Toggle - Available for all types -->
+                    <Frame BackgroundColor="#F8F9FA" CornerRadius="8" Padding="12" Margin="0,10,0,0"
+                           IsVisible="{Binding HasSelectedDate, Converter={StaticResource InvertedBoolConverter}}">
+                        <StackLayout Orientation="Horizontal" Spacing="12">
+                            <Switch IsToggled="{Binding IsRepeating}" 
+                                    OnColor="#5527ad" ThumbColor="White" />
+                            <Label Text="{Binding Source={x:Static helpers:LocalizationResourceManager.Instance}, Path=[RepeatEveryWeek]}" 
+                                   TextColor="#666" 
+                                   VerticalOptions="Center" FontSize="14" />
+                        </StackLayout>
+                    </Frame>
+                    
+                    <!-- Dynamic Explanation -->
+                    <Label Text="{Binding RepeatExplanation}" 
+                           FontSize="14" TextColor="#666" 
+                           Margin="0,10,0,0" />
+                    
+                    <!-- Custom Option -->
+                    <StackLayout IsVisible="{Binding IsCustomSelected}" Spacing="12" Margin="0,10,0,0">
+                        <Label Text="{Binding Source={x:Static helpers:LocalizationResourceManager.Instance}, Path=[RepeatTypeCustom]}" FontSize="16" FontAttributes="Bold" TextColor="#1A1A1A" />
+                        <Label Text="{Binding Source={x:Static helpers:LocalizationResourceManager.Instance}, Path=[SelectSpecificDays]}" FontSize="14" TextColor="#666" />
+                        
+                        <!-- Days Selection -->
+                        <Frame BackgroundColor="#F8F9FA" CornerRadius="8" Padding="12">
+                            <Grid ColumnDefinitions="*,*,*,*,*,*,*" RowDefinitions="Auto,Auto" RowSpacing="8">
+                                <Label Grid.Row="0" Grid.Column="0" Text="{Binding Source={x:Static helpers:LocalizationResourceManager.Instance}, Path=[DaySun]}" FontSize="12" HorizontalTextAlignment="Center" FontAttributes="Bold" />
+                                <Label Grid.Row="0" Grid.Column="1" Text="{Binding Source={x:Static helpers:LocalizationResourceManager.Instance}, Path=[DayMon]}" FontSize="12" HorizontalTextAlignment="Center" FontAttributes="Bold" />
+                                <Label Grid.Row="0" Grid.Column="2" Text="{Binding Source={x:Static helpers:LocalizationResourceManager.Instance}, Path=[DayTue]}" FontSize="12" HorizontalTextAlignment="Center" FontAttributes="Bold" />
+                                <Label Grid.Row="0" Grid.Column="3" Text="{Binding Source={x:Static helpers:LocalizationResourceManager.Instance}, Path=[DayWed]}" FontSize="12" HorizontalTextAlignment="Center" FontAttributes="Bold" />
+                                <Label Grid.Row="0" Grid.Column="4" Text="{Binding Source={x:Static helpers:LocalizationResourceManager.Instance}, Path=[DayThu]}" FontSize="12" HorizontalTextAlignment="Center" FontAttributes="Bold" />
+                                <Label Grid.Row="0" Grid.Column="5" Text="{Binding Source={x:Static helpers:LocalizationResourceManager.Instance}, Path=[DayFri]}" FontSize="12" HorizontalTextAlignment="Center" FontAttributes="Bold" />
+                                <Label Grid.Row="0" Grid.Column="6" Text="{Binding Source={x:Static helpers:LocalizationResourceManager.Instance}, Path=[DaySat]}" FontSize="12" HorizontalTextAlignment="Center" FontAttributes="Bold" />
+                                
+                                <CheckBox Grid.Row="1" Grid.Column="0" IsChecked="{Binding RepeatSun}" Color="#5527ad" />
+                                <CheckBox Grid.Row="1" Grid.Column="1" IsChecked="{Binding RepeatMon}" Color="#5527ad" />
+                                <CheckBox Grid.Row="1" Grid.Column="2" IsChecked="{Binding RepeatTue}" Color="#5527ad" />
+                                <CheckBox Grid.Row="1" Grid.Column="3" IsChecked="{Binding RepeatWed}" Color="#5527ad" />
+                                <CheckBox Grid.Row="1" Grid.Column="4" IsChecked="{Binding RepeatThu}" Color="#5527ad" />
+                                <CheckBox Grid.Row="1" Grid.Column="5" IsChecked="{Binding RepeatFri}" Color="#5527ad" />
+                                <CheckBox Grid.Row="1" Grid.Column="6" IsChecked="{Binding RepeatSat}" Color="#5527ad" />
+                            </Grid>
+                        </Frame>
+                        
+                        <!-- Date Picker Section -->
+                        <Frame BackgroundColor="#F8F9FA" CornerRadius="8" Padding="12">
+                            <VerticalStackLayout Spacing="8">
+                                <StackLayout Orientation="Horizontal" Spacing="8">
+                                    <Label Text="📅" FontSize="16" VerticalOptions="Center" />
+                                    <Label Text="{Binding Source={x:Static helpers:LocalizationResourceManager.Instance}, Path=[OrSelectSpecificDate]}" FontSize="14" TextColor="#666" VerticalOptions="Center" />
+                                </StackLayout>
+                                
+                                <!-- Direct Date Picker with Icon -->
+                                <Frame BackgroundColor="White" CornerRadius="8" Padding="12" HasShadow="False">
+                                    <StackLayout Orientation="Horizontal" Spacing="8">
+                                        <Label Text="📅" FontSize="18" VerticalOptions="Center" />
+                                        <DatePicker x:Name="DirectDatePicker"
+                                                   Date="{Binding SelectedDate}"
+                                                   MinimumDate="{Binding Today}"
+                                                   MaximumDate="{Binding MaxDate}"
+                                                   FontSize="16"
+                                                   BackgroundColor="Transparent"
+                                                   TextColor="#1A1A1A"
+                                                   HorizontalOptions="FillAndExpand" />
+                                    </StackLayout>
+                                </Frame>
+                                
+                                <!-- Selected Date Display -->
+                                <StackLayout IsVisible="{Binding HasSelectedDate}" Orientation="Horizontal" Spacing="8">
+                                    <Label Text="{Binding Source={x:Static helpers:LocalizationResourceManager.Instance}, Path=[ScheduledFor]}" FontSize="14" TextColor="#666" VerticalOptions="Center" />
+                                    <Label Text="{Binding SelectedDateText}" FontSize="14" TextColor="#1A1A1A" FontAttributes="Bold" VerticalOptions="Center" />
+                                    <Button Text="✕" 
+                                            Command="{Binding ClearDateCommand}"
+                                            BackgroundColor="#F44336"
+                                            TextColor="White"
+                                            CornerRadius="12"
+                                            WidthRequest="24"
+                                            HeightRequest="24"
+                                            FontSize="12"
+                                            HorizontalOptions="End" />
+                                </StackLayout>
+                            </VerticalStackLayout>
+                        </Frame>
+                        
+                        <!-- Explanation for Custom -->
+                        <Label Text="{Binding CustomExplanation}" 
+                               FontSize="12" TextColor="#999" 
+                               HorizontalOptions="Center" />
+                    </StackLayout>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Status -->
+            <Frame BackgroundColor="White" CornerRadius="16" Padding="16" HasShadow="True">
+                <VerticalStackLayout>
+                    <Label Text="{Binding Source={x:Static helpers:LocalizationResourceManager.Instance}, Path=[Enabled]}" FontSize="16" FontAttributes="Bold" TextColor="#1A1A1A" />
+                    <Switch IsToggled="{Binding IsEnabled}" OnColor="#5527ad" ThumbColor="White" />
+                    <Label Text="{Binding Source={x:Static helpers:LocalizationResourceManager.Instance}, Path=[EnableAlarm]}" FontSize="14" TextColor="#666" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Notes -->
+            <Frame BackgroundColor="White" CornerRadius="16" Padding="16" HasShadow="True">
+                <VerticalStackLayout>
+                    <Label Text="{Binding Source={x:Static helpers:LocalizationResourceManager.Instance}, Path=[Notes]}" FontSize="16" FontAttributes="Bold" TextColor="#1A1A1A" />
+                    <Entry Placeholder="{Binding Source={x:Static helpers:LocalizationResourceManager.Instance}, Path=[NotesPlaceholder]}" Text="{Binding Notes}" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Save Button -->
+            <Button Text="{Binding Source={x:Static helpers:LocalizationResourceManager.Instance}, Path=[SaveAlarmButton]}" 
+                    BackgroundColor="#5527ad" 
+                    TextColor="White" 
+                    FontSize="18" 
+                    FontAttributes="Bold" 
+                    CornerRadius="16" 
+                    HeightRequest="56" 
+                    Command="{Binding SaveCommand}" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

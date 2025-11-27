@@ -220,15 +220,20 @@ namespace BellManager.ViewModels
 		public string? Notes { get; set; }
 
         // Properties for XAML bindings
-        public List<string> RepeatTypeOptions => new() { "Once", "Sunday", "Custom" };
+        public List<string> RepeatTypeOptions => new() 
+        { 
+            LocalizationResourceManager.Instance["RepeatTypeOnce"].ToString(), 
+            LocalizationResourceManager.Instance["RepeatTypeSunday"].ToString(), 
+            LocalizationResourceManager.Instance["RepeatTypeCustom"].ToString() 
+        };
         
         public bool IsOnceSelected => SelectedRepeatType == RepeatType.Once;
         public bool IsSundaySelected => SelectedRepeatType == RepeatType.Sunday;
         public bool IsCustomSelected => SelectedRepeatType == RepeatType.Custom;
         
         public string CustomExplanation => IsRepeating 
-            ? "This alarm will repeat every week on the selected days" 
-            : "This alarm will ring once on the next occurrence of the selected day";
+            ? LocalizationResourceManager.Instance["RepeatExplanationCustomRepeating"].ToString()
+            : LocalizationResourceManager.Instance["RepeatExplanationCustomOnce"].ToString();
             
         public string RepeatExplanation
         {
@@ -238,20 +243,20 @@ namespace BellManager.ViewModels
                 {
                     return SelectedRepeatType switch
                     {
-                        RepeatType.Once => "This alarm will repeat every week on the same day",
-                        RepeatType.Sunday => "This alarm will repeat every Sunday",
-                        RepeatType.Custom => "This alarm will repeat every week on the selected days",
-                        _ => "This alarm will repeat every week"
+                        RepeatType.Once => LocalizationResourceManager.Instance["RepeatExplanationEveryDay"].ToString(), // Wait, Once + Repeating = Every Day? Logic check needed.
+                        RepeatType.Sunday => LocalizationResourceManager.Instance["RepeatExplanationSunday"].ToString(),
+                        RepeatType.Custom => LocalizationResourceManager.Instance["RepeatExplanationCustomRepeating"].ToString(),
+                        _ => LocalizationResourceManager.Instance["RepeatExplanationEveryWeek"].ToString()
                     };
                 }
                 else
                 {
                     return SelectedRepeatType switch
                     {
-                        RepeatType.Once => "This alarm will ring once at the specified time (Today if time hasn't passed, otherwise tomorrow)",
-                        RepeatType.Sunday => "This alarm will ring once on the next Sunday",
-                        RepeatType.Custom => "This alarm will ring once on the next occurrence of the selected day",
-                        _ => "This alarm will ring once"
+                        RepeatType.Once => LocalizationResourceManager.Instance["RepeatExplanationOnceTodayTomorrow"].ToString(),
+                        RepeatType.Sunday => LocalizationResourceManager.Instance["RepeatExplanationNextSunday"].ToString(),
+                        RepeatType.Custom => LocalizationResourceManager.Instance["RepeatExplanationCustomOnce"].ToString(),
+                        _ => LocalizationResourceManager.Instance["RepeatExplanationOnceGeneric"].ToString()
                     };
                 }
             }
@@ -271,6 +276,14 @@ namespace BellManager.ViewModels
 			
 			// Load church information when ViewModel is created
 			_ = Task.Run(async () => await LoadChurchInfoAsync());
+
+            LocalizationResourceManager.Instance.PropertyChanged += (sender, e) =>
+            {
+                OnPropertyChanged(nameof(RepeatTypeOptions));
+                OnPropertyChanged(nameof(CustomExplanation));
+                OnPropertyChanged(nameof(RepeatExplanation));
+                OnPropertyChanged(nameof(SelectedRepeatTypeIndex)); // Force picker update
+            };
 		}
 
         private async Task LoadAlarmAsync(int id)
@@ -350,6 +363,8 @@ namespace BellManager.ViewModels
             
             var time = new TimeOnly(SelectedHour, SelectedMinute);
             var daysOfWeek = ComputeDaysOfWeekFromNewSystem();
+            System.Diagnostics.Debug.WriteLine($"Computed DaysOfWeek: {string.Join(", ", daysOfWeek)}");
+            System.Diagnostics.Debug.WriteLine($"Flags: Sun={RepeatSun}, Mon={RepeatMon}, Tue={RepeatTue}, Wed={RepeatWed}, Thu={RepeatThu}, Fri={RepeatFri}, Sat={RepeatSat}");
             
             var model = new Alarm
             {

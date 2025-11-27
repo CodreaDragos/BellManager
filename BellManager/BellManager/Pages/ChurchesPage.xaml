@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:helpers="clr-namespace:BellManager.Helpers"
              x:Class="BellManager.Pages.ChurchesPage"
-             Title="Churches"
+             Title="{Binding Source={x:Static helpers:LocalizationResourceManager.Instance}, Path=[AdminChurchesTitle]}"
              BackgroundColor="#F5F7FA">
 
     <ContentPage.Resources>
@@ -28,12 +29,12 @@
             </Style>
 
             <Style x:Key="ActionButtonStyle" TargetType="Button">
-                <Setter Property="BackgroundColor" Value="#4285F4"/>
+                <Setter Property="BackgroundColor" Value="#5527ad"/>
                 <Setter Property="TextColor" Value="White"/>
                 <Setter Property="FontSize" Value="14"/>
                 <Setter Property="FontAttributes" Value="Bold"/>
                 <Setter Property="CornerRadius" Value="8"/>
-                <Setter Property="HeightRequest" Value="36"/>
+                <Setter Property="HeightRequest" Value="50"/>
                 <Setter Property="WidthRequest" Value="80"/>
             </Style>
 
@@ -56,33 +57,33 @@
         </Grid.RowDefinitions>
 
         <!-- Header Section -->
-        <Frame Grid.Row="0" BackgroundColor="#4285F4" CornerRadius="24" HasShadow="True" Padding="20,40,20,24">
+        <Frame Grid.Row="0" BackgroundColor="#5527ad" CornerRadius="24" HasShadow="True" Padding="20,40,20,24">
             <StackLayout>
-                <Label Text="Churches Management" FontSize="28" FontAttributes="Bold" TextColor="White" HorizontalOptions="Start"/>
-                <Label Text="Manage church information and assignments" FontSize="16" TextColor="#E3F2FD" Margin="0,4,0,0"/>
+                <Label Text="{Binding Source={x:Static helpers:LocalizationResourceManager.Instance}, Path=[AdminChurchesTitle]}" FontSize="28" FontAttributes="Bold" TextColor="White" HorizontalOptions="Start"/>
+                <Label Text="{Binding Source={x:Static helpers:LocalizationResourceManager.Instance}, Path=[AdminChurchesSubtitle]}" FontSize="16" TextColor="#E3F2FD" Margin="0,4,0,0"/>
             </StackLayout>
         </Frame>
 
         <!-- Add Church Form -->
         <Frame Grid.Row="0" BackgroundColor="White" CornerRadius="16" HasShadow="True" Padding="20,16" Margin="16,80,16,16">
             <VerticalStackLayout Spacing="16">
-                <Label Text="Add New Church" FontSize="18" FontAttributes="Bold" TextColor="#1A1A1A" />
+                <Label Text="{Binding Source={x:Static helpers:LocalizationResourceManager.Instance}, Path=[AddChurchButton]}" FontSize="18" FontAttributes="Bold" TextColor="#1A1A1A" />
                 
                 <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto" ColumnSpacing="12" RowSpacing="12">
                     <Entry Grid.Row="0" Grid.Column="0" 
-                           Placeholder="Church Name" 
+                           Placeholder="{Binding Source={x:Static helpers:LocalizationResourceManager.Instance}, Path=[ChurchNamePlaceholder]}" 
                            Text="{Binding Name}" 
                            FontSize="16" 
                            BackgroundColor="#F8F9FA" />
                     
                     <Entry Grid.Row="0" Grid.Column="1" 
-                           Placeholder="Phone Number" 
+                           Placeholder="{Binding Source={x:Static helpers:LocalizationResourceManager.Instance}, Path=[PhonePlaceholder]}" 
                            Text="{Binding Phone}" 
                            FontSize="16" 
                            BackgroundColor="#F8F9FA" />
                     
                     <Button Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
-                            Text="Add Church" 
+                            Text="{Binding Source={x:Static helpers:LocalizationResourceManager.Instance}, Path=[AddChurchButton]}" 
                             Style="{StaticResource ActionButtonStyle}"
                             HeightRequest="48"
                             WidthRequest="200"
@@ -100,18 +101,24 @@
 					  BackgroundColor="Transparent"
 					  Margin="16,0">
 			<CollectionView.Header>
-				<Label Text="{Binding Churches.Count, StringFormat='Total Churches: {0}'}" 
-					   FontSize="16" 
+				<Label FontSize="16" 
 					   TextColor="#666" 
 					   HorizontalOptions="Center" 
-					   Margin="0,0,0,10" />
+					   Margin="0,0,0,10">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="{Binding Source={x:Static helpers:LocalizationResourceManager.Instance}, Path=[TotalChurchesPrefix]}" />
+                            <Span Text="{Binding Churches.Count}" />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
 			</CollectionView.Header>
 			<CollectionView.ItemTemplate>
 				<DataTemplate>
 					<SwipeView>
 						<SwipeView.RightItems>
 							<SwipeItems Mode="Execute">
-								<SwipeItem Text="Delete" 
+								<SwipeItem Text="{Binding Source={x:Static helpers:LocalizationResourceManager.Instance}, Path=[Delete]}" 
 										 BackgroundColor="#F44336" 
 										 Command="{Binding Path=BindingContext.DeleteCommand, Source={x:Reference ChurchesList}}" 
 										 CommandParameter="{Binding .}" />
@@ -142,14 +149,14 @@
 										   Orientation="Horizontal" 
 										   Spacing="8" 
 										   VerticalOptions="Center">
-									<Button Text="Edit" 
-										  BackgroundColor="#2196F3"
+									<Button Text="{Binding Source={x:Static helpers:LocalizationResourceManager.Instance}, Path=[Edit]}" 
+										  BackgroundColor="#5527ad"
 										  TextColor="White"
 										  CornerRadius="8"
 										  Padding="16,8"
 										  Command="{Binding Path=BindingContext.EditCommand, Source={x:Reference ChurchesList}}" 
 										  CommandParameter="{Binding .}" />
-									<Button Text="Delete" 
+									<Button Text="{Binding Source={x:Static helpers:LocalizationResourceManager.Instance}, Path=[Delete]}" 
 										  BackgroundColor="#F44336"
 										  TextColor="White"
 										  CornerRadius="8"
@@ -178,21 +185,21 @@
                VerticalOptions="Center"
                HorizontalOptions="Fill">
             <VerticalStackLayout Spacing="20">
-                <Label Text="Edit Church" 
+                <Label Text="{Binding Source={x:Static helpers:LocalizationResourceManager.Instance}, Path=[EditChurch]}" 
                        FontSize="24" 
                        FontAttributes="Bold" 
                        TextColor="#1A1A1A" 
                        HorizontalOptions="Center" />
                 
                 <Entry x:Name="EditNameEntry" 
-                       Placeholder="Church Name" 
+                       Placeholder="{Binding Source={x:Static helpers:LocalizationResourceManager.Instance}, Path=[ChurchNamePlaceholder]}" 
                        FontSize="16" 
                        BackgroundColor="#F8F9FA"
                        HeightRequest="50"
                        Text="{Binding EditingName}" />
                 
                 <Entry x:Name="EditPhoneEntry" 
-                       Placeholder="Phone Number" 
+                       Placeholder="{Binding Source={x:Static helpers:LocalizationResourceManager.Instance}, Path=[PhonePlaceholder]}" 
                        FontSize="16" 
                        BackgroundColor="#F8F9FA"
                        HeightRequest="50"
@@ -200,7 +207,7 @@
                 
                 <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
                     <Button Grid.Column="0"
-                            Text="Save" 
+                            Text="{Binding Source={x:Static helpers:LocalizationResourceManager.Instance}, Path=[Save]}" 
                             BackgroundColor="#4CAF50"
                             TextColor="White"
                             CornerRadius="8"
@@ -208,7 +215,7 @@
                             Command="{Binding SaveEditCommand}" />
                     
                     <Button Grid.Column="1"
-                            Text="Cancel" 
+                            Text="{Binding Source={x:Static helpers:LocalizationResourceManager.Instance}, Path=[Cancel]}" 
                             BackgroundColor="#F44336"
                             TextColor="White"
                             CornerRadius="8"

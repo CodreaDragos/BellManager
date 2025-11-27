@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:helpers="clr-namespace:BellManager.Helpers"
              x:Class="BellManager.Pages.AssignUserChurchPage"
-             Title="Assign User to Church"
+             Title="{Binding Source={x:Static helpers:LocalizationResourceManager.Instance}, Path=[AssignUser]}"
              BackgroundColor="#F5F7FA">
 
     <ContentPage.Resources>
@@ -24,12 +25,13 @@
             </Style>
 
             <Style x:Key="AssignButtonStyle" TargetType="Button">
-                <Setter Property="BackgroundColor" Value="#4285F4"/>
+                <Setter Property="BackgroundColor" Value="#5527ad"/>
                 <Setter Property="TextColor" Value="White"/>
                 <Setter Property="FontSize" Value="18"/>
                 <Setter Property="FontAttributes" Value="Bold"/>
                 <Setter Property="CornerRadius" Value="16"/>
-                <Setter Property="HeightRequest" Value="56"/>
+                <Setter Property="HeightRequest" Value="60"/>
+                <Setter Property="Shadow" Value="{Shadow Brush=Black, Offset='0,4', Opacity=0.2, Radius=5}"/>
             </Style>
 
             <Style x:Key="UserInfoStyle" TargetType="Label">
@@ -53,34 +55,34 @@
         </Grid.RowDefinitions>
 
         <!-- Header Section -->
-        <Frame Grid.Row="0" BackgroundColor="#4285F4" CornerRadius="24" HasShadow="True" Padding="20,40,20,24">
+        <Frame Grid.Row="0" BackgroundColor="#5527ad" CornerRadius="24" HasShadow="True" Padding="20,40,20,24">
             <StackLayout>
-                <Label Text="User-Church Assignment" FontSize="28" FontAttributes="Bold" TextColor="White" HorizontalOptions="Start"/>
-                <Label Text="Assign users to their respective churches" FontSize="16" TextColor="#E3F2FD" Margin="0,4,0,0"/>
+                <Label Text="{Binding Source={x:Static helpers:LocalizationResourceManager.Instance}, Path=[AdminAssignTitle]}" FontSize="28" FontAttributes="Bold" TextColor="White" HorizontalOptions="Start"/>
+                <Label Text="{Binding Source={x:Static helpers:LocalizationResourceManager.Instance}, Path=[AdminAssignSubtitle]}" FontSize="16" TextColor="#E3F2FD" Margin="0,4,0,0"/>
             </StackLayout>
         </Frame>
 
         <!-- Assignment Form -->
         <Frame Grid.Row="0" BackgroundColor="White" CornerRadius="16" HasShadow="True" Padding="20,16" Margin="16,80,16,16">
             <VerticalStackLayout Spacing="20">
-                <Label Text="Assign User to Church" FontSize="18" FontAttributes="Bold" TextColor="#1A1A1A" />
+                <Label Text="{Binding Source={x:Static helpers:LocalizationResourceManager.Instance}, Path=[AssignUser]}" FontSize="18" FontAttributes="Bold" TextColor="#1A1A1A" />
                 
                 <VerticalStackLayout Spacing="16">
-                    <Label Text="Select User" FontSize="16" FontAttributes="Bold" TextColor="#1A1A1A" />
+                    <Label Text="{Binding Source={x:Static helpers:LocalizationResourceManager.Instance}, Path=[SelectUser]}" FontSize="16" FontAttributes="Bold" TextColor="#1A1A1A" />
                     <Picker x:Name="UserPicker" 
-                            Title="Choose a user..." 
+                            Title="{Binding Source={x:Static helpers:LocalizationResourceManager.Instance}, Path=[SelectUser]}" 
                             ItemsSource="{Binding Users}"
                             ItemDisplayBinding="{Binding UserName}" 
                             Style="{StaticResource PickerStyle}" />
                     
-                    <Label Text="Select Church" FontSize="16" FontAttributes="Bold" TextColor="#1A1A1A" />
+                    <Label Text="{Binding Source={x:Static helpers:LocalizationResourceManager.Instance}, Path=[SelectChurch]}" FontSize="16" FontAttributes="Bold" TextColor="#1A1A1A" />
                     <Picker x:Name="ChurchPicker" 
-                            Title="Choose a church..." 
+                            Title="{Binding Source={x:Static helpers:LocalizationResourceManager.Instance}, Path=[SelectChurch]}" 
                             ItemsSource="{Binding Churches}"
                             ItemDisplayBinding="{Binding Name}" 
                             Style="{StaticResource PickerStyle}" />
                     
-                    <Button Text="Assign User to Church" 
+                    <Button Text="{Binding Source={x:Static helpers:LocalizationResourceManager.Instance}, Path=[AssignUser]}" 
                             Style="{StaticResource AssignButtonStyle}"
                             Clicked="OnAssignClicked" />
                 </VerticalStackLayout>
@@ -90,7 +92,7 @@
         <!-- Current Assignments List -->
         <ScrollView Grid.Row="1" Margin="0,16,0,80">
             <VerticalStackLayout Spacing="8">
-                <Label Text="Current Assignments" 
+                <Label Text="{Binding Source={x:Static helpers:LocalizationResourceManager.Instance}, Path=[CurrentAssignments]}" 
                        FontSize="20" 
                        FontAttributes="Bold" 
                        TextColor="#1A1A1A" 
@@ -105,7 +107,7 @@
                             <SwipeView>
                                 <SwipeView.RightItems>
                                     <SwipeItems Mode="Execute">
-                                        <SwipeItem Text="Delete" 
+                                        <SwipeItem Text="{Binding Source={x:Static helpers:LocalizationResourceManager.Instance}, Path=[Delete]}" 
                                                  BackgroundColor="#F44336" 
                                                  Command="{Binding Path=BindingContext.DeleteAssignmentCommand, Source={x:Reference AssignmentsList}}" 
                                                  CommandParameter="{Binding .}" />
@@ -122,7 +124,7 @@
 
                                         <!-- Church Information -->
                                         <StackLayout Grid.Column="0" Grid.Row="1">
-                                            <Label Text="Assigned to:" FontSize="12" TextColor="#666" Margin="0,0,0,4"/>
+                                            <Label Text="{Binding Source={x:Static helpers:LocalizationResourceManager.Instance}, Path=[AssignedTo]}" FontSize="12" TextColor="#666" Margin="0,0,0,4"/>
                                             <Label Text="{Binding ChurchName, FallbackValue='[No Church]'}" Style="{StaticResource ChurchInfoStyle}" FontSize="16" TextColor="#1A1A1A"/>
                                             <Label Text="{Binding ChurchPhone, FallbackValue='[No Phone]'}" FontSize="14" TextColor="#666" Margin="0,2,0,0"/>
                                             <!-- Debug Info -->
@@ -135,15 +137,15 @@
                                                    HorizontalOptions="End"
                                                    Orientation="Vertical"
                                                    Spacing="8">
-                                            <Button Text="Edit" 
-                                                  BackgroundColor="#2196F3"
+                                            <Button Text="{Binding Source={x:Static helpers:LocalizationResourceManager.Instance}, Path=[Edit]}" 
+                                                  BackgroundColor="#5527ad"
                                                   TextColor="White"
                                                   CornerRadius="8"
                                                   Padding="12,8"
                                                   FontSize="12"
                                                   Command="{Binding Path=BindingContext.EditAssignmentCommand, Source={x:Reference AssignmentsList}}" 
                                                   CommandParameter="{Binding .}" />
-                                            <Button Text="Delete" 
+                                            <Button Text="{Binding Source={x:Static helpers:LocalizationResourceManager.Instance}, Path=[Delete]}" 
                                                   BackgroundColor="#F44336"
                                                   TextColor="White"
                                                   CornerRadius="8"
@@ -174,7 +176,7 @@
                VerticalOptions="Center"
                HorizontalOptions="Fill">
             <VerticalStackLayout Spacing="20">
-                <Label Text="Edit Assignment" 
+                <Label Text="{Binding Source={x:Static helpers:LocalizationResourceManager.Instance}, Path=[EditAssignment]}" 
                        FontSize="24" 
                        FontAttributes="Bold" 
                        TextColor="#1A1A1A" 
@@ -186,7 +188,7 @@
                        HorizontalOptions="Center" />
                 
                 <Picker x:Name="EditChurchPicker" 
-                        Title="Select New Church" 
+                        Title="{Binding Source={x:Static helpers:LocalizationResourceManager.Instance}, Path=[SelectChurch]}" 
                         ItemsSource="{Binding Churches}"
                         ItemDisplayBinding="{Binding Name}" 
                         Style="{StaticResource PickerStyle}"
@@ -194,7 +196,7 @@
                 
                 <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
                     <Button Grid.Column="0"
-                            Text="Save" 
+                            Text="{Binding Source={x:Static helpers:LocalizationResourceManager.Instance}, Path=[Save]}" 
                             BackgroundColor="#4CAF50"
                             TextColor="White"
                             CornerRadius="8"
@@ -202,7 +204,7 @@
                             Command="{Binding SaveEditAssignmentCommand}" />
                     
                     <Button Grid.Column="1"
-                            Text="Cancel" 
+                            Text="{Binding Source={x:Static helpers:LocalizationResourceManager.Instance}, Path=[Cancel]}" 
                             BackgroundColor="#F44336"
                             TextColor="White"
                             CornerRadius="8"
